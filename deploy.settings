@@ -3,4 +3,4 @@ groupId = Mss
 artifactId = MssXml2Class
 licenses = ['Apache 2'] // or something else 
 id = MssXml2Class
-gitUrl = https://github.com/mtschach/MssIntern
+gitUrl = https://github.com/mtschach/MssXml2Class
