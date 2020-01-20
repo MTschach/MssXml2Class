@@ -1,0 +1,21 @@
+<classes>
+<class name="TestKlasse" package="de.mss.test" implements="java.io.Serializable" >
+   <const name="eine_Konstante"     type="String"        value="irgendwas" comment="ne Konstante" />
+   <variable name="SessionId"       type="Integer"       value="null" />
+   <variable name="bla"             type="Boolean"       value="true" />
+   <variable name="foo"             type="de.mss.foo.FooClass" value="null" comment="ne subklasse" />
+   <variable name="bar"             type="java.util.Map&lt;String, de.mss.foo.FooClass&gt;" value="null" />
+   <variable name="loginPassword"   type="String"        value="null" />
+</class>
+
+<class name="FooClass" package="de.mss.foo" extends="java.math.BigDecimal">
+   <variable name="masterfoo" type="java.util.Date" />
+   <variable name="buffer" type="byte[]" />
+</class>
+<class name="BarClass" package="de.mss.foo" extends="java.math.BigDecimal">
+   <variable name="masterfoo" type="java.util.Date" />
+   <variable name="list" type="java.util.List&lt;de.mss.test.TestKlasse&gt;" />
+   <variable name="list1" type="java.util.List&lt;String&gt;" annotation="@HeaderParam(value = &quot;list1&quot;)" />
+   <method value="public boolean isBar() { return this.masterfoo != null; }" />
+</class>
+</classes>
