@@ -59,7 +59,9 @@ public class VariableHolder extends ConstantHolder {
 
 
    private String getPrintValue(String t, String v) {
-      if (isPrimitiveType(t))
+      if (isSimpleType(t))
+         return v;
+      else if (isPrimitiveType(t))
          return v + ".toString()";
       else if ("String".equals(t))
          return !this.name.toUpperCase().contains("PASSWORD") ? v : "\"****\"";
@@ -116,15 +118,18 @@ public class VariableHolder extends ConstantHolder {
    private String writeSimpleArrayValue() {
       StringBuilder sb = new StringBuilder();
       
-      String subType = this.type.substring(this.type.length() - 2);
+      String subType = this.type.substring(0, this.type.length() - 2);
 
       sb.append("   public String write" + getMethodName() + "() {" + this.nl);
       sb.append("      StringBuilder sb = new StringBuilder(\"size {\" + this." + getFieldName() + ".length + \"} \");" + this.nl);
 
       sb.append("      for(int i=0; i<this." + getFieldName() + ".length; i++) {" + this.nl);
-      sb
+      if (isSimpleType(subType))
+         sb.append("         sb.append(\"[\" + i + \"] {\" + " + getPrintValue(subType, "this." + getFieldName() + "[i]") + " + \"} \");" + this.nl);
+      else
+         sb
             .append(
-                  "         if (this." + getFieldName() + "[i] != null) sb.append(\"[\" + i + \"] {\" + "
+                     "         if (this." + getFieldName() + "[i] != null) sb.append(\"[\" + i + \"] {\" + "
                         + getPrintValue(subType, "this." + getFieldName() + "[i]") + " + \"} \");" + this.nl);
       sb.append("      }" + this.nl);
 
@@ -144,10 +149,16 @@ public class VariableHolder extends ConstantHolder {
       sb.append("      StringBuilder sb = new StringBuilder(\"size {\" + this." + getFieldName() + ".size() + \"} \");" + this.nl);
 
       sb.append("      for(int i=0; i<this." + getFieldName() + ".size(); i++) {" + this.nl);
-      sb
+      if (isSimpleType(subType))
+         sb
             .append(
-                  "         if (this." + getFieldName() + ".get(i) != null) sb.append(\"[\" + i + \"] {\" + "
+                     "         sb.append(\"[\" + i + \"] {\" + "
                         + getPrintValue(subType, "this." + getFieldName() + ".get(i)") + " + \"} \");" + this.nl);
+      else
+         sb
+               .append(
+                     "         if (this." + getFieldName() + ".get(i) != null) sb.append(\"[\" + i + \"] {\" + "
+                           + getPrintValue(subType, "this." + getFieldName() + ".get(i)") + " + \"} \");" + this.nl);
       sb.append("      }" + this.nl);
 
       sb.append("      return sb.toString();" + this.nl);
@@ -166,10 +177,16 @@ public class VariableHolder extends ConstantHolder {
       sb.append("      StringBuilder sb = new StringBuilder(\"size {\" + this." + getFieldName() + ".size() + \"} \");" + this.nl);
 
       sb.append("      for(java.util.Map.Entry<" + subType[0] + "," + subType[1] + "> e : this." + getFieldName() + ".entrySet()) {" + this.nl);
-      sb
+      if (isSimpleType(subType[1]))
+         sb
             .append(
-                  "         if (e.getValue() != null) sb.append(\"[\" + e.getKey() + \"] {\" + " + getPrintValue(subType[1], "e.getValue()")
+                     "         sb.append(\"[\" + e.getKey() + \"] {\" + " + getPrintValue(subType[1], "e.getValue()")
                         + " + \"} \");" + this.nl);
+      else
+         sb
+               .append(
+                     "         if (e.getValue() != null) sb.append(\"[\" + e.getKey() + \"] {\" + " + getPrintValue(subType[1], "e.getValue()")
+                           + " + \"} \");" + this.nl);
       sb.append("      }" + this.nl);
       
       sb.append("      return sb.toString();" + this.nl);
@@ -188,10 +205,16 @@ public class VariableHolder extends ConstantHolder {
       sb.append("      StringBuilder sb = new StringBuilder(\"size {\" + this." + getFieldName() + ".size() + \"} \");" + this.nl);
 
       sb.append("      for(int i=0; i<this." + getFieldName() + ".size(); i++) {" + this.nl);
+      if (isSimpleType(subType))
       sb
             .append(
-                  "         if (this." + getFieldName() + ".get(i) != null) sb.append(\"[\" + i + \"] {\" + "
-                        + getPrintValue(subType, "this." + getFieldName() + ".get(i)") + " + \"} \");" + this.nl);
+                     "         sb.append(\"[\" + i + \"] {\" + " + getPrintValue(subType, "this." + getFieldName() + ".get(i)") + " + \"} \");"
+                           + this.nl);
+      else
+         sb
+               .append(
+                     "         if (this." + getFieldName() + ".get(i) != null) sb.append(\"[\" + i + \"] {\" + "
+                           + getPrintValue(subType, "this." + getFieldName() + ".get(i)") + " + \"} \");" + this.nl);
       sb.append("      }" + this.nl);
 
       sb.append("      return sb.toString();" + this.nl);
@@ -241,6 +264,20 @@ public class VariableHolder extends ConstantHolder {
              "Double".equalsIgnoreCase(t) ||
              "Float".equalsIgnoreCase(t) ||
              "Integer".equalsIgnoreCase(t)
+          ;
+      //@formatter:on
+   }
+
+
+   private boolean isSimpleType(String t) {
+      //@formatter:off
+      return "boolean".equalsIgnoreCase(t) ||
+             "byte".equalsIgnoreCase(t) ||
+             "double".equalsIgnoreCase(t) ||
+             "float".equalsIgnoreCase(t) ||
+             "int".equalsIgnoreCase(t) ||
+             "short".equalsIgnoreCase(t) ||
+             "long".equalsIgnoreCase(t)
           ;
       //@formatter:on
    }
