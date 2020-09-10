@@ -7,12 +7,12 @@ import de.mss.utils.Tools;
 
 public class ClassHolder {
 
-   private String name           = null;
-   private String packageName    = null;
-   private String extendsFrom    = null;
-   private String implementsFrom = null;
-   private String version        = null;
-   private String comment        = null;
+   private String               name           = null;
+   private String               packageName    = null;
+   private String               extendsFrom    = null;
+   private String               implementsFrom = null;
+   private String               version        = null;
+   private String               comment        = null;
 
    private List<ConstantHolder> constants      = new ArrayList<>();
    private List<VariableHolder> variables      = new ArrayList<>();
@@ -70,22 +70,26 @@ public class ClassHolder {
 
 
    public void addConstant(ConstantHolder c) {
-      if (c == null)
+      if (c == null) {
          return;
+      }
 
-      if (this.constants == null)
+      if (this.constants == null) {
          this.constants = new ArrayList<>();
+      }
 
       this.constants.add(c);
    }
 
 
    public void addVariable(VariableHolder c) {
-      if (c == null)
+      if (c == null) {
          return;
+      }
 
-      if (this.variables == null)
+      if (this.variables == null) {
          this.variables = new ArrayList<>();
+      }
 
       this.variables.add(c);
    }
@@ -112,24 +116,27 @@ public class ClassHolder {
 
 
    public String getExtendsFrom() {
-      if (Tools.isSet(this.extendsFrom))
+      if (Tools.isSet(this.extendsFrom)) {
          return " extends " + this.extendsFrom;
+      }
 
       return "";
    }
 
 
    public String getImplementsFrom() {
-      if (Tools.isSet(this.implementsFrom))
+      if (Tools.isSet(this.implementsFrom)) {
          return " implements " + this.implementsFrom;
+      }
 
       return "";
    }
 
 
    public String getVersion() {
-      if (Tools.isSet(this.version))
+      if (Tools.isSet(this.version)) {
          return "private static final long serialVersionUID = " + this.version + "l;";
+      }
 
       return "";
    }
@@ -152,5 +159,17 @@ public class ClassHolder {
 
    public List<String> getSpecialMethods() {
       return this.specialMethods;
+   }
+
+
+   public boolean hasRequiredFields() {
+
+      for (final VariableHolder v : this.variables) {
+         if (v.isRequired()) {
+            return true;
+         }
+      }
+
+      return false;
    }
 }
