@@ -62,17 +62,18 @@ public class ConstantHolder {
 
 
    protected String writeValue() {
-      if (this.value == null || this.value.length() == 0)
+      if (this.value == null || this.value.length() == 0 || "null".equalsIgnoreCase(this.value)) {
          return "null";
-      else if ("String".equals(this.type))
+      } else if ("String".equals(this.type)) {
          return "\"" + this.value + "\"";
-      else
+      } else {
          return this.value;
+      }
    }
 
 
    public String getFieldWithValue() {
-      StringBuilder sb = new StringBuilder();
+      final StringBuilder sb = new StringBuilder();
 
       sb.append(getDeclarationName());
       if (Tools.isSet(this.value)) {
