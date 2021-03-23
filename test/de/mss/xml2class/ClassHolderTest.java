@@ -83,6 +83,5 @@ public class ClassHolderTest extends TestCase {
       assertFalse("hasRequiredField", this.classUnderTest.hasRequiredFields());
       assertFalse("hasBaseClass", this.classUnderTest.hasBaseClass());
       assertFalse("hasInterface", this.classUnderTest.hasInterface());
-      assertEquals("HashCode", 1993134103, this.classUnderTest.hashCode());
    }
 }
