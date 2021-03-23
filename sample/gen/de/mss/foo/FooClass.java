@@ -52,14 +52,14 @@ public class FooClass extends java.math.BigDecimal {
 
 
 
+
    public String writeBuffer() {
       StringBuilder sb = new StringBuilder("size {" + this.buffer.length + "} ");
       for(int i=0; i<this.buffer.length; i++) {
-         if (this.buffer[i] != null) sb.append("[" + i + "] {" + writeBuffer() + "} ");
+         sb.append("[" + i + "] {" + this.buffer[i] + "} ");
       }
       return sb.toString();
    }
-
 
 
 

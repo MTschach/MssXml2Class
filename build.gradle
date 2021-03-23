@@ -23,19 +23,41 @@ buildscript {
         jcenter()
         google()
     }
-	dependencies {
-		classpath 'com.android.tools.build:gradle:3.2.1'
-		classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
-		classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.+'
+   dependencies {
+      classpath 'com.android.tools.build:gradle:3.2.1'
+      classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
+      classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.+'
     }
 }
-                                                                                                                          
+
 repositories {
    jcenter()
    maven {
       url "https://dl.bintray.com/mtschach/Mss"
    }
    mavenLocal()
+}
+
+configurations {
+   mainCompile
+   testCompile.extendsFrom mainCompile
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs "src"
+        }
+        resources {
+            srcDirs "resources"
+        }
+    }
+    
+    test {
+        java {
+            srcDirs "test"
+        }
+    }
 }
 
 dependencies {
@@ -71,9 +93,6 @@ jar {
          'Main-Class': 'de.mss.xml2class.Xml2Class'
       )
    }
-//   from {
-//     configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-//   }
 }
 
 

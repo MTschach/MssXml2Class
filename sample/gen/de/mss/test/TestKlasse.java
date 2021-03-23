@@ -6,7 +6,7 @@ public class TestKlasse implements java.io.Serializable {
 
 
    /** ne Konstante */
-   private static final String EINE_KONSTANTE = "irgendwas";
+   public static final String EINE_KONSTANTE = "irgendwas";
    
 
 
@@ -32,7 +32,7 @@ public class TestKlasse implements java.io.Serializable {
 
    /**  */
    
-   private String loginPassword = "null";
+   private String loginPassword = null;
    
 
    public TestKlasse () {
@@ -80,7 +80,7 @@ public class TestKlasse implements java.io.Serializable {
          sb.append("SessionId {" + this.sessionId.toString() + "} ");
 
       if (this.bla != null)
-         sb.append("Bla {" + this.bla.toString() + "} ");
+         sb.append("Bla {" + this.bla + "} ");
 
       if (this.foo != null)
          sb.append("Foo {" + this.foo.toString() + "} ");
@@ -89,11 +89,12 @@ public class TestKlasse implements java.io.Serializable {
          sb.append("Bar {" + writeBar() + "} ");
 
       if (this.loginPassword != null)
-         sb.append("LoginPassword {" + **** + "} ");
+         sb.append("LoginPassword {" + "****" + "} ");
 
       sb.append("] ");
       return sb.toString();
    }
+
 
 
 
@@ -108,7 +109,6 @@ public class TestKlasse implements java.io.Serializable {
       }
       return sb.toString();
    }
-
 
 
 

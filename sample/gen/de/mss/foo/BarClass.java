@@ -66,6 +66,7 @@ public class BarClass extends java.math.BigDecimal {
 
 
 
+
    public String writeList() {
       StringBuilder sb = new StringBuilder("size {" + this.list.size() + "} ");
       for(int i=0; i<this.list.size(); i++) {
@@ -89,7 +90,6 @@ public class BarClass extends java.math.BigDecimal {
 
 
 
-
-   public boolean isBar() { return this.masterfoo != null; }
+public boolean isBar() { return this.masterfoo != null; }
 
 }
