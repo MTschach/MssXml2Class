@@ -26,14 +26,14 @@ buildscript {
    dependencies {
       classpath 'com.android.tools.build:gradle:3.2.1'
       classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
-      classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.+'
+      classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:latest.release'
     }
 }
 
 repositories {
    jcenter()
    maven {
-      url "https://dl.bintray.com/mtschach/Mss"
+      url 'https://mtschach.jfrog.io/artifactory/mss-repo'
    }
    mavenLocal()
 }
@@ -104,4 +104,4 @@ task publishLocal {
 // Define the main class for the application
 mainClassName = 'de.mss.xml2class.Xml2Class'
 
-apply from: 'deploy.gradle'
+apply from: 'https://raw.githubusercontent.com/MTschach/MssUtils/master/deploy.gradle'
