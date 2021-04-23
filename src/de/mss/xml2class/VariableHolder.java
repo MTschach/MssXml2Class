@@ -194,6 +194,12 @@ public class VariableHolder extends ConstantHolder {
    }
 
 
+   @Override
+   public String toString() {
+      return super.toString() + ", required: " + this.required;
+   }
+
+
    private String writeListValue() {
       final StringBuilder sb = new StringBuilder();
 

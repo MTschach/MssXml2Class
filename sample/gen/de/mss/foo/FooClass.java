@@ -50,6 +50,19 @@ public class FooClass extends java.math.BigDecimal {
       return sb.toString();
    }
 
+   @Override
+   public void checkRequiredFields() throws de.mss.utils.exception.MssException {
+
+      if (this.masterfoo == null) {
+         throw new de.mss.utils.exception.MssException(de.mss.net.exception.ErrorCodes.ERROR_REQUIRED_FIELD_MISSING, "masterfoo must not be null");
+      }
+
+
+      
+
+      super.checkRequiredFields();
+   }
+
 
 
 

@@ -1,5 +1,6 @@
 package {PACKAGE_NAME};
 
+// Generated with MssXml2Class from Class.template
 public class {CLASS_NAME}{BASE_CLASS}{INTERFACE} {
    {VERSION}
 

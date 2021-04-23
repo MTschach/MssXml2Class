@@ -16,23 +16,25 @@ public class ConstantHolder {
    }
 
 
-   public void setName(String n) {
-      this.name = n;
+   public String getComment() {
+      return this.comment;
    }
 
 
-   public void setType(String n) {
-      this.type = n;
+   public String getDeclarationName() {
+      return this.name.toUpperCase();
    }
 
 
-   public void setValue(String n) {
-      this.value = n;
-   }
+   public String getFieldWithValue() {
+      final StringBuilder sb = new StringBuilder();
 
+      sb.append(getDeclarationName());
+      if (Tools.isSet(this.value)) {
+         sb.append(" = " + writeValue());
+      }
 
-   public void setComment(String n) {
-      this.comment = n;
+      return sb.toString();
    }
 
 
@@ -51,13 +53,29 @@ public class ConstantHolder {
    }
 
 
-   public String getComment() {
-      return this.comment;
+   public void setComment(String n) {
+      this.comment = n;
    }
 
 
-   public String getDeclarationName() {
-      return this.name.toUpperCase();
+   public void setName(String n) {
+      this.name = n;
+   }
+
+
+   public void setType(String n) {
+      this.type = n;
+   }
+
+
+   public void setValue(String n) {
+      this.value = n;
+   }
+
+
+   @Override
+   public String toString() {
+      return "Name: " + this.name + ", Type: " + this.type;
    }
 
 
@@ -69,17 +87,5 @@ public class ConstantHolder {
       } else {
          return this.value;
       }
-   }
-
-
-   public String getFieldWithValue() {
-      final StringBuilder sb = new StringBuilder();
-
-      sb.append(getDeclarationName());
-      if (Tools.isSet(this.value)) {
-         sb.append(" = " + writeValue());
-      }
-
-      return sb.toString();
    }
 }

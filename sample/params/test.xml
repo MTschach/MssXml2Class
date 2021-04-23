@@ -2,14 +2,14 @@
 <class name="TestKlasse" package="de.mss.test" implements="java.io.Serializable" >
    <const name="eine_Konstante"     type="String"        value="irgendwas" comment="ne Konstante" />
    <variable name="SessionId"       type="Integer"       value="null" />
-   <variable name="bla"             type="Boolean"       value="true" />
-   <variable name="foo"             type="de.mss.foo.FooClass" value="null" comment="ne subklasse" />
+   <variable name="bla"             type="Boolean"       value="true" required="true" />
+   <variable name="foo"             type="de.mss.foo.FooClass" value="null" comment="ne subklasse" required="true" />
    <variable name="bar"             type="java.util.Map&lt;String, de.mss.foo.FooClass&gt;" value="null" />
    <variable name="loginPassword"   type="String"        value="null" />
 </class>
 
 <class name="FooClass" package="de.mss.foo" extends="java.math.BigDecimal">
-   <variable name="masterfoo" type="java.util.Date" />
+   <variable name="masterfoo" type="java.util.Date" required="true" />
    <variable name="buffer" type="byte[]" />
 </class>
 <class name="BarClass" package="de.mss.foo" extends="java.math.BigDecimal">

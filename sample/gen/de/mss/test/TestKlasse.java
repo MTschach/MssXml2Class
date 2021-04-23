@@ -80,7 +80,7 @@ public class TestKlasse implements java.io.Serializable {
          sb.append("SessionId {" + this.sessionId.toString() + "} ");
 
       if (this.bla != null)
-         sb.append("Bla {" + this.bla + "} ");
+         sb.append("Bla {" + this.bla.toString() + "} ");
 
       if (this.foo != null)
          sb.append("Foo {" + this.foo.toString() + "} ");
@@ -93,6 +93,27 @@ public class TestKlasse implements java.io.Serializable {
 
       sb.append("] ");
       return sb.toString();
+   }
+
+   public void checkRequiredFields() throws de.mss.utils.exception.MssException {
+
+      
+
+      if (this.bla == null) {
+         throw new de.mss.utils.exception.MssException(de.mss.net.exception.ErrorCodes.ERROR_REQUIRED_FIELD_MISSING, "bla must not be null");
+      }
+
+
+      if (this.foo == null) {
+         throw new de.mss.utils.exception.MssException(de.mss.net.exception.ErrorCodes.ERROR_REQUIRED_FIELD_MISSING, "foo must not be null");
+      }
+      this.foo.checkRequiredFields();
+
+
+      
+
+      
+
    }
 
 

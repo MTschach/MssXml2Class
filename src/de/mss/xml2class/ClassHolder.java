@@ -24,51 +24,6 @@ public class ClassHolder {
    }
 
 
-   public void setName(String n) {
-      this.name = n;
-   }
-
-
-   public void setPackageName(String n) {
-      this.packageName = n;
-   }
-
-
-   public void setExtendsFrom(String n) {
-      this.extendsFrom = n;
-   }
-
-
-   public void setImplementsFrom(String n) {
-      this.implementsFrom = n;
-   }
-
-
-   public void setVersion(String n) {
-      this.version = n;
-   }
-
-
-   public void setComment(String n) {
-      this.comment = n;
-   }
-
-
-   public void setConstants(List<ConstantHolder> l) {
-      this.constants = l;
-   }
-
-
-   public void setVariables(List<VariableHolder> l) {
-      this.variables = l;
-   }
-
-
-   public void setSpecialMethods(List<String> l) {
-      this.specialMethods = l;
-   }
-
-
    public void addConstant(ConstantHolder c) {
       if (c == null) {
          return;
@@ -95,23 +50,13 @@ public class ClassHolder {
    }
 
 
-   public String getName() {
-      return this.name;
+   public String getComment() {
+      return this.comment;
    }
 
 
-   public String getPackageName() {
-      return this.packageName;
-   }
-
-
-   public boolean hasBaseClass() {
-      return Tools.isSet(this.extendsFrom);
-   }
-
-
-   public boolean hasInterface() {
-      return Tools.isSet(this.implementsFrom);
+   public List<ConstantHolder> getConstants() {
+      return this.constants;
    }
 
 
@@ -133,6 +78,26 @@ public class ClassHolder {
    }
 
 
+   public String getName() {
+      return this.name;
+   }
+
+
+   public String getPackageName() {
+      return this.packageName;
+   }
+
+
+   public List<String> getSpecialMethods() {
+      return this.specialMethods;
+   }
+
+
+   public List<VariableHolder> getVariables() {
+      return this.variables;
+   }
+
+
    public String getVersion() {
       if (Tools.isSet(this.version)) {
          return "private static final long serialVersionUID = " + this.version + "l;";
@@ -142,23 +107,13 @@ public class ClassHolder {
    }
 
 
-   public String getComment() {
-      return this.comment;
+   public boolean hasBaseClass() {
+      return Tools.isSet(this.extendsFrom);
    }
 
 
-   public List<ConstantHolder> getConstants() {
-      return this.constants;
-   }
-
-
-   public List<VariableHolder> getVariables() {
-      return this.variables;
-   }
-
-
-   public List<String> getSpecialMethods() {
-      return this.specialMethods;
+   public boolean hasInterface() {
+      return Tools.isSet(this.implementsFrom);
    }
 
 
@@ -171,5 +126,66 @@ public class ClassHolder {
       }
 
       return false;
+   }
+
+
+   public void setComment(String n) {
+      this.comment = n;
+   }
+
+
+   public void setConstants(List<ConstantHolder> l) {
+      this.constants = l;
+   }
+
+
+   public void setExtendsFrom(String n) {
+      this.extendsFrom = n;
+   }
+
+
+   public void setImplementsFrom(String n) {
+      this.implementsFrom = n;
+   }
+
+
+   public void setName(String n) {
+      this.name = n;
+   }
+
+
+   public void setPackageName(String n) {
+      this.packageName = n;
+   }
+
+
+   public void setSpecialMethods(List<String> l) {
+      this.specialMethods = l;
+   }
+
+
+   public void setVariables(List<VariableHolder> l) {
+      this.variables = l;
+   }
+
+
+   public void setVersion(String n) {
+      this.version = n;
+   }
+
+
+   @Override
+   public String toString() {
+      final StringBuilder sb = new StringBuilder("Name: " + this.name);
+      if (this.packageName != null) {
+         sb.append(", Package: " + this.packageName);
+      }
+      if (this.extendsFrom != null) {
+         sb.append(", Extends: " + this.extendsFrom);
+      }
+      if (this.implementsFrom != null) {
+         sb.append(", Interfaces: " + this.implementsFrom);
+      }
+      return sb.toString();
    }
 }
