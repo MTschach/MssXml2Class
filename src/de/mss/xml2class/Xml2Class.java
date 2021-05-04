@@ -147,6 +147,8 @@ public class Xml2Class {
             cl.setDateFormat(eElement.getAttribute("format"));
             cl.setAnnotation(eElement.getAttribute("annotation"));
             cl.setRequired("true".equalsIgnoreCase(eElement.getAttribute("required")));
+            cl.setMaxLength(eElement.getAttribute("maxLength"));
+            cl.setMinLength(eElement.getAttribute("minLength"));
 
             list.add(cl);
          }
@@ -341,7 +343,7 @@ public class Xml2Class {
    }
 
 
-   private String runTemplate(ClassHolder clazz, String template, String section) {
+   private String runTemplate(ClassHolder clazz, String template, String section) throws IOException {
       final String ret = template;
 
       final int startIndex = ret.indexOf("{" + section + "_START}");
@@ -362,19 +364,29 @@ public class Xml2Class {
       final StringBuilder sb = new StringBuilder(before);
 
       for (final VariableHolder v : clazz.getVariables()) {
-         sb
-               .append(
-                     inner
-                           .replaceAll("\\{COMMENT\\}", v.getComment())
-                           .replaceAll("\\{FIELD_TYPE\\}", v.getType())
-                           .replaceAll("\\{FIELD_NAME_WITH_VALUE\\}", v.getFieldWithValue())
-                           .replaceAll("\\{FIELD_NAME\\}", v.getFieldName())
-                           .replaceAll("\\{METHOD_NAME\\}", v.getMethodName())
-                           .replaceAll("\\{PRINT_NAME\\}", v.getMethodName())
-                           .replaceAll("\\{PRINT_VALUE\\}", v.getPrintValue())
-                           .replaceAll("\\{METHOD\\}", v.writeSpecialMethods())
-                           .replaceAll("\\{ANNOTATION\\}", v.getAnnotation())
-                           .replaceAll("\\{CHECK\\}", v.writeRequiredCheck(this.classList)));
+         final String str = inner
+               .replaceAll("\\{COMMENT\\}", v.getComment())
+               .replaceAll("\\{FIELD_TYPE\\}", v.getType())
+               .replaceAll("\\{FIELD_NAME_WITH_VALUE\\}", v.getFieldWithValue())
+               .replaceAll("\\{FIELD_NAME\\}", v.getFieldName())
+               .replaceAll("\\{METHOD_NAME\\}", v.getMethodName())
+               .replaceAll("\\{PRINT_NAME\\}", v.getMethodName())
+               .replaceAll("\\{PRINT_VALUE\\}", v.getPrintValue())
+               .replaceAll("\\{METHOD\\}", v.writeSpecialMethods())
+               .replaceAll("\\{ANNOTATION\\}", v.getAnnotation())
+               .replaceAll("\\{CHECK\\}", v.writeRequiredCheck(this.classList));
+
+         final BufferedReader br = new BufferedReader(new StringReader(str));
+         String line = null;
+         while ((line = br.readLine()) != null) {
+            if (line.startsWith("{IS_ENUM}")) {
+               if (v.isEnum()) {
+                  sb.append(line.substring("{IS_ENUM}".length()));
+               }
+            } else {
+               sb.append(line + this.nl);
+            }
+         }
       }
 
       sb.append(after);
@@ -413,7 +425,7 @@ public class Xml2Class {
    }
 
 
-   private String runTemplateForRequired(ClassHolder clazz, String template) {
+   private String runTemplateForRequired(ClassHolder clazz, String template) throws IOException {
       final String ret = template;
 
       final int startIndex = ret.indexOf("{REQUIRED_START}");

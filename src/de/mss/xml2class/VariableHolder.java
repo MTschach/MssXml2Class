@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import de.mss.utils.Tools;
+import de.mss.xml2class.interfaces.ApiEnumeration;
 
 public class VariableHolder extends ConstantHolder {
 
@@ -12,6 +13,8 @@ public class VariableHolder extends ConstantHolder {
    private String  dateFormat = "yyyy-MM-dd HH:mm:ss.SSS";
    private String  annotation = null;
    private boolean required   = false;
+   private int     maxLength  = -1;
+   private int     minLength  = -1;
 
    public VariableHolder() {
       // nothing to do here
@@ -125,6 +128,22 @@ public class VariableHolder extends ConstantHolder {
    }
 
 
+   public boolean isEnum() {
+      if (isList() || isMap() || isPrimitiveType(this.type) || isSimpleArray() || isSimpleType(this.type)) {
+         return false;
+      }
+
+      try {
+         final Class<?> clazz = Class.forName(this.type);
+         return ApiEnumeration.class.isAssignableFrom(clazz);
+      }
+      catch (final ClassNotFoundException e) {
+         Tools.doNullLog(e);
+      }
+      return false;
+   }
+
+
    public boolean isList() {
       return this.type.contains("List<");
    }
@@ -186,6 +205,24 @@ public class VariableHolder extends ConstantHolder {
       if (Tools.isSet(v)) {
          this.dateFormat = v;
       }
+   }
+
+
+   public void setMaxLength(String value) {
+      if (value == null || value.isEmpty()) {
+         return;
+      }
+
+      this.maxLength = Integer.parseInt(value);
+   }
+
+
+   public void setMinLength(String value) {
+      if (value == null || value.isEmpty()) {
+         return;
+      }
+
+      this.minLength = Integer.parseInt(value);
    }
 
 
@@ -282,6 +319,24 @@ public class VariableHolder extends ConstantHolder {
       sb.append("if (this." + getFieldName() + " == null) {" + this.nl);
       sb.append(writeThrow("must not be null"));
       sb.append("      }" + this.nl);
+      if ("String".equals(this.type)) {
+         if (this.minLength == this.maxLength && this.minLength > 0) {
+            sb.append("      if (this." + getFieldName() + ".length() != " + this.maxLength + ") {" + this.nl);
+            sb.append(writeThrow(" must have a length of " + this.maxLength));
+            sb.append("      }" + this.nl);
+         } else {
+            if (this.minLength >= 0) {
+               sb.append("      if (this." + getFieldName() + ".length() < " + this.minLength + ") {" + this.nl);
+               sb.append(writeThrow("is too short"));
+               sb.append("      }" + this.nl);
+            }
+            if (this.maxLength > 1) {
+               sb.append("      if (this." + getFieldName() + ".length() > " + this.maxLength + ") {" + this.nl);
+               sb.append(writeThrow("is too long"));
+               sb.append("      }" + this.nl);
+            }
+         }
+      }
 
       if (isList() || isMap() || isVector()) {
          sb.append("      if (this." + getFieldName() + ".isEmpty()) {" + this.nl);

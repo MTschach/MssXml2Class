@@ -1,16 +1,21 @@
 <classes>
 <class name="TestKlasse" package="de.mss.test" implements="java.io.Serializable" >
-   <const name="eine_Konstante"     type="String"        value="irgendwas" comment="ne Konstante" />
+   <const name="eine_Konstante"     type="String"        value="irgendwas" comment="ne Konstante"/>
    <variable name="SessionId"       type="Integer"       value="null" />
    <variable name="bla"             type="Boolean"       value="true" required="true" />
    <variable name="foo"             type="de.mss.foo.FooClass" value="null" comment="ne subklasse" required="true" />
    <variable name="bar"             type="java.util.Map&lt;String, de.mss.foo.FooClass&gt;" value="null" />
    <variable name="loginPassword"   type="String"        value="null" />
+   <variable name="description"     type="String"        value="null" minLength="2" maxLength="50" required="true" />
+   <variable name="countryCode"     type="String"        value="null" minLength="2" maxLength="2"  required="true" />
+   <variable name="minStringValue"  type="String"        value="null" minLength="2" required="true" />
+   <variable name="maxStringValue"  type="String"        value="null" maxLength="50" required="true" />
 </class>
 
 <class name="FooClass" package="de.mss.foo" extends="java.math.BigDecimal">
    <variable name="masterfoo" type="java.util.Date" required="true" />
    <variable name="buffer" type="byte[]" />
+   <variable name="type" type="de.mss.xml2class.enumeration.TestEnum" />
 </class>
 <class name="BarClass" package="de.mss.foo" extends="java.math.BigDecimal">
    <variable name="masterfoo" type="java.util.Date" />

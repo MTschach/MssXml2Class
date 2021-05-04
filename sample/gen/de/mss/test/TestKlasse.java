@@ -35,6 +35,26 @@ public class TestKlasse implements java.io.Serializable {
    private String loginPassword = null;
    
 
+   /**  */
+   
+   private String description = null;
+   
+
+   /**  */
+   
+   private String countryCode = null;
+   
+
+   /**  */
+   
+   private String minStringValue = null;
+   
+
+   /**  */
+   
+   private String maxStringValue = null;
+   
+
    public TestKlasse () {
       // nothing to do here
    }
@@ -55,21 +75,36 @@ public class TestKlasse implements java.io.Serializable {
    public String getLoginPassword () { return this.loginPassword; }
    
 
+   public String getDescription () { return this.description; }
+   
+
+   public String getCountryCode () { return this.countryCode; }
+   
+
+   public String getMinStringValue () { return this.minStringValue; }
+   
+
+   public String getMaxStringValue () { return this.maxStringValue; }
+   
+
 
    public void setSessionId (Integer v) { this.sessionId = v; }
-   
 
    public void setBla (Boolean v) { this.bla = v; }
-   
 
    public void setFoo (de.mss.foo.FooClass v) { this.foo = v; }
-   
 
    public void setBar (java.util.Map<String, de.mss.foo.FooClass> v) { this.bar = v; }
-   
 
    public void setLoginPassword (String v) { this.loginPassword = v; }
-   
+
+   public void setDescription (String v) { this.description = v; }
+
+   public void setCountryCode (String v) { this.countryCode = v; }
+
+   public void setMinStringValue (String v) { this.minStringValue = v; }
+
+   public void setMaxStringValue (String v) { this.maxStringValue = v; }
 
 
    @Override
@@ -90,6 +125,18 @@ public class TestKlasse implements java.io.Serializable {
 
       if (this.loginPassword != null)
          sb.append("LoginPassword {" + "****" + "} ");
+
+      if (this.description != null)
+         sb.append("Description {" + this.description + "} ");
+
+      if (this.countryCode != null)
+         sb.append("CountryCode {" + this.countryCode + "} ");
+
+      if (this.minStringValue != null)
+         sb.append("MinStringValue {" + this.minStringValue + "} ");
+
+      if (this.maxStringValue != null)
+         sb.append("MaxStringValue {" + this.maxStringValue + "} ");
 
       sb.append("] ");
       return sb.toString();
@@ -114,6 +161,41 @@ public class TestKlasse implements java.io.Serializable {
 
       
 
+      if (this.description == null) {
+         throw new de.mss.utils.exception.MssException(de.mss.net.exception.ErrorCodes.ERROR_REQUIRED_FIELD_MISSING, "description must not be null");
+      }
+      if (this.description.length() < 2) {
+         throw new de.mss.utils.exception.MssException(de.mss.net.exception.ErrorCodes.ERROR_REQUIRED_FIELD_MISSING, "description is too short");
+      }
+      if (this.description.length() > 50) {
+         throw new de.mss.utils.exception.MssException(de.mss.net.exception.ErrorCodes.ERROR_REQUIRED_FIELD_MISSING, "description is too long");
+      }
+
+
+      if (this.countryCode == null) {
+         throw new de.mss.utils.exception.MssException(de.mss.net.exception.ErrorCodes.ERROR_REQUIRED_FIELD_MISSING, "countryCode must not be null");
+      }
+      if (this.countryCode.length() != 2) {
+         throw new de.mss.utils.exception.MssException(de.mss.net.exception.ErrorCodes.ERROR_REQUIRED_FIELD_MISSING, "countryCode  must have a length of 2");
+      }
+
+
+      if (this.minStringValue == null) {
+         throw new de.mss.utils.exception.MssException(de.mss.net.exception.ErrorCodes.ERROR_REQUIRED_FIELD_MISSING, "minStringValue must not be null");
+      }
+      if (this.minStringValue.length() < 2) {
+         throw new de.mss.utils.exception.MssException(de.mss.net.exception.ErrorCodes.ERROR_REQUIRED_FIELD_MISSING, "minStringValue is too short");
+      }
+
+
+      if (this.maxStringValue == null) {
+         throw new de.mss.utils.exception.MssException(de.mss.net.exception.ErrorCodes.ERROR_REQUIRED_FIELD_MISSING, "maxStringValue must not be null");
+      }
+      if (this.maxStringValue.length() > 50) {
+         throw new de.mss.utils.exception.MssException(de.mss.net.exception.ErrorCodes.ERROR_REQUIRED_FIELD_MISSING, "maxStringValue is too long");
+      }
+
+
    }
 
 
@@ -130,6 +212,14 @@ public class TestKlasse implements java.io.Serializable {
       }
       return sb.toString();
    }
+
+
+
+
+
+
+
+
 
 
 
