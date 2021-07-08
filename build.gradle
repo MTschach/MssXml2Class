@@ -30,13 +30,8 @@ buildscript {
     }
 }
 
-repositories {
-   jcenter()
-   maven {
-      url 'https://michassoftwareschmiede.jfrog.io/artifactory/mss-repo'
-   }
-   mavenLocal()
-}
+apply from: 'https://raw.githubusercontent.com/MTschach/MssUtils/master/artifactory.gradle'
+
 
 configurations {
    mainCompile
@@ -93,11 +88,6 @@ jar {
          'Main-Class': 'de.mss.xml2class.Xml2Class'
       )
    }
-}
-
-
-task publishLocal {
-   dependsOn 'publishToMavenLocal'
 }
 
 
