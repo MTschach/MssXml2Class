@@ -1,0 +1,11 @@
+package {PACKAGE_NAME};
+{CLASS_PREFIX_If}
+public interface If{CLASS_NAME}{INTERFACE} {
+{GETTER_START}
+   public {FIELD_TYPE} get{METHOD_NAME} ();
+{GETTER_END}
+{SETTER_START}
+   public void set{METHOD_NAME} ({FIELD_TYPE} v);
+{IS_ENUM}   public void set{METHOD_NAME} (String v);
+{SETTER_END}
+}

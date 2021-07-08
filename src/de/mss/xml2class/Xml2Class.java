@@ -69,6 +69,7 @@ public class Xml2Class {
 
 
    public void doWork() throws ParserConfigurationException, SAXException, IOException {
+      System.out.println("Running MssXml2Class version 1.3.1");
       readXmlFiles(new File(this.inputPath));
 
       readTemplates(this.templatePath);
@@ -149,6 +150,8 @@ public class Xml2Class {
             cl.setRequired("true".equalsIgnoreCase(eElement.getAttribute("required")));
             cl.setMaxLength(eElement.getAttribute("maxLength"));
             cl.setMinLength(eElement.getAttribute("minLength"));
+            cl.setThrowsException(eElement.getAttribute("throws"));
+            cl.setOverrides("true".equalsIgnoreCase(eElement.getAttribute("overrides")));
 
             list.add(cl);
          }
@@ -203,10 +206,14 @@ public class Xml2Class {
    }
 
 
-   private void readTemplates(File file) throws IOException {
+   private void readTemplates(File file, int maxDepth) throws IOException {
+      if (maxDepth <= 0) {
+         return;
+      }
+
       if (file.isDirectory()) {
          for (final File f : file.listFiles(new TemplateFileNameFilter())) {
-            readTemplates(f);
+            readTemplates(f, maxDepth - 1);
          }
          return;
       }
@@ -235,7 +242,7 @@ public class Xml2Class {
          return;
       }
 
-      readTemplates(dir);
+      readTemplates(dir, 1);
    }
 
 
@@ -374,7 +381,9 @@ public class Xml2Class {
                .replaceAll("\\{PRINT_VALUE\\}", v.getPrintValue())
                .replaceAll("\\{METHOD\\}", v.writeSpecialMethods())
                .replaceAll("\\{ANNOTATION\\}", v.getAnnotation())
-               .replaceAll("\\{CHECK\\}", v.writeRequiredCheck(this.classList));
+               .replaceAll("\\{CHECK\\}", v.writeRequiredCheck(this.classList))
+               .replaceAll("\\{THROWS\\}", v.writeThrowsException())
+               .replaceAll("\\{OVERRIDES\\}", v.writeOverrides());
 
          final BufferedReader br = new BufferedReader(new StringReader(str));
          String line = null;
@@ -465,16 +474,23 @@ public class Xml2Class {
 
    private void writeClass(ClassHolder clazz, String classTemplate, String templateName) throws IOException {
 
-      final Pattern pattern = Pattern.compile("\\{CLASS_SUFFIX_(.*?)\\}");
-      final Matcher matcher = pattern.matcher(classTemplate);
+      Pattern pattern = Pattern.compile("\\{CLASS_SUFFIX_(.*?)\\}");
+      Matcher matcher = pattern.matcher(classTemplate);
       String classSuffix = "";
+      String classPrefix = "";
       if (matcher.find()) {
          classSuffix = matcher.group(1);
       }
+      pattern = Pattern.compile("\\{CLASS_PREFIX_(.*?)\\}");
+      matcher = pattern.matcher(classTemplate);
+      if (matcher.find()) {
+         classPrefix = matcher.group(1);
+      }
 
-      System.out.println("Generating Class " + clazz.getName() + classSuffix + " with template " + templateName);
+      System.out.println("Generating Class " + classPrefix + clazz.getName() + classSuffix + " with template " + templateName);
 
       String templ = classTemplate
+            .replaceAll("\\{CLASS_PREFIX_(.*?)\\}", "")
             .replaceAll("\\{CLASS_SUFFIX_(.*?)\\}", "")
             .replaceAll("\\{PACKAGE_NAME\\}", clazz.getPackageName())
             .replaceAll("\\{VERSION\\}", clazz.getVersion())
@@ -512,7 +528,7 @@ public class Xml2Class {
       f.mkdirs();
       try (
            FileOutputStream fos = new FileOutputStream(
-                 f.getAbsolutePath() + System.getProperty("file.separator") + clazz.getName() + classSuffix + ".java")
+                 f.getAbsolutePath() + System.getProperty("file.separator") + classPrefix + clazz.getName() + classSuffix + ".java")
       ) {
          fos.write(templ.getBytes());
          fos.flush();

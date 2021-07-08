@@ -26,7 +26,7 @@ public class {CLASS_NAME}{BASE_CLASS}{INTERFACE} {
    
 {GETTER_END}
 {SETTER_START}
-   public void set{METHOD_NAME} ({FIELD_TYPE} v) { this.{FIELD_NAME} = v; }
+   public void set{METHOD_NAME} ({FIELD_TYPE} v) {THROWS} { this.{FIELD_NAME} = v; }
    
 {SETTER_END}
 

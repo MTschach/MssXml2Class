@@ -17,8 +17,8 @@
    <variable name="buffer" type="byte[]" />
    <variable name="type" type="de.mss.xml2class.enumeration.TestEnum" />
 </class>
-<class name="BarClass" package="de.mss.foo" extends="java.math.BigDecimal">
-   <variable name="masterfoo" type="java.util.Date" />
+<class name="BarClass" package="de.mss.foo" extends="java.math.BigDecimal" implements="java.io.Serializable" >
+   <variable name="masterfoo" type="java.util.Date" throws="java.lang.FormatException, de.mss.utils.exception.MssException"/>
    <variable name="list" type="java.util.List&lt;de.mss.test.TestKlasse&gt;" />
    <variable name="list1" type="java.util.List&lt;String&gt;" annotation="@HeaderParam(value = &quot;list1&quot;)" />
    <method value="public boolean isBar() { return this.masterfoo != null; }" />

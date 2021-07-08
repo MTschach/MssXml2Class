@@ -88,23 +88,23 @@ public class TestKlasse implements java.io.Serializable {
    
 
 
-   public void setSessionId (Integer v) { this.sessionId = v; }
+   public void setSessionId (Integer v)  { this.sessionId = v; }
 
-   public void setBla (Boolean v) { this.bla = v; }
+   public void setBla (Boolean v)  { this.bla = v; }
 
-   public void setFoo (de.mss.foo.FooClass v) { this.foo = v; }
+   public void setFoo (de.mss.foo.FooClass v)  { this.foo = v; }
 
-   public void setBar (java.util.Map<String, de.mss.foo.FooClass> v) { this.bar = v; }
+   public void setBar (java.util.Map<String, de.mss.foo.FooClass> v)  { this.bar = v; }
 
-   public void setLoginPassword (String v) { this.loginPassword = v; }
+   public void setLoginPassword (String v)  { this.loginPassword = v; }
 
-   public void setDescription (String v) { this.description = v; }
+   public void setDescription (String v)  { this.description = v; }
 
-   public void setCountryCode (String v) { this.countryCode = v; }
+   public void setCountryCode (String v)  { this.countryCode = v; }
 
-   public void setMinStringValue (String v) { this.minStringValue = v; }
+   public void setMinStringValue (String v)  { this.minStringValue = v; }
 
-   public void setMaxStringValue (String v) { this.maxStringValue = v; }
+   public void setMaxStringValue (String v)  { this.maxStringValue = v; }
 
 
    @Override

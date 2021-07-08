@@ -16,6 +16,11 @@ public class FooClass extends java.math.BigDecimal {
    private byte[] buffer;
    
 
+   /**  */
+   
+   private de.mss.xml2class.enumeration.TestEnum type;
+   
+
    public FooClass () {
       super();
    }
@@ -27,13 +32,16 @@ public class FooClass extends java.math.BigDecimal {
    public byte[] getBuffer () { return this.buffer; }
    
 
-
-   public void setMasterfoo (java.util.Date v) { this.masterfoo = v; }
+   public de.mss.xml2class.enumeration.TestEnum getType () { return this.type; }
    
 
-   public void setBuffer (byte[] v) { this.buffer = v; }
-   
 
+   public void setMasterfoo (java.util.Date v)  { this.masterfoo = v; }
+
+   public void setBuffer (byte[] v)  { this.buffer = v; }
+
+   public void setType (de.mss.xml2class.enumeration.TestEnum v)  { this.type = v; }
+   public void setType (String v)  { this.type = de.mss.xml2class.enumeration.TestEnum.getByApiValue(v); }
 
    @Override
    public String toString() {
@@ -44,6 +52,9 @@ public class FooClass extends java.math.BigDecimal {
 
       if (this.buffer != null)
          sb.append("Buffer {" + writeBuffer() + "} ");
+
+      if (this.type != null)
+         sb.append("Type {" + this.type.toString() + "} ");
 
       sb.append(super.toString());
       sb.append("] ");
@@ -60,6 +71,8 @@ public class FooClass extends java.math.BigDecimal {
 
       
 
+      
+
       super.checkRequiredFields();
    }
 
@@ -73,6 +86,8 @@ public class FooClass extends java.math.BigDecimal {
       }
       return sb.toString();
    }
+
+
 
 
 

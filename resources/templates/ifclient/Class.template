@@ -1,6 +1,6 @@
 package {PACKAGE_NAME};
 
-public class {CLASS_NAME}{BASE_CLASS}{INTERFACE} {
+public class {CLASS_NAME}{BASE_CLASS} implements If{CLASS_NAME} {
    {VERSION}
 
 
@@ -21,15 +21,11 @@ public class {CLASS_NAME}{BASE_CLASS}{INTERFACE} {
    }
    
 {GETTER_START}
-   {OVERRIDES}
    public {FIELD_TYPE} get{METHOD_NAME} () { return this.{FIELD_NAME}; }
-   
 {GETTER_END}
 {SETTER_START}
-   {OVERRIDES}
-   public void set{METHOD_NAME} ({FIELD_TYPE} v) {THROWS} { this.{FIELD_NAME} = v; }
-{IS_ENUM}   {OVERRIDES}
-{IS_ENUM}   public void set{METHOD_NAME} (String v) {THROWS} { this.{FIELD_NAME} = {FIELD_TYPE}.getByApiValue(v); }
+   public void set{METHOD_NAME} ({FIELD_TYPE} v) { this.{FIELD_NAME} = v; }
+{IS_ENUM}   public void set{METHOD_NAME} (String v) { this.{FIELD_NAME} = {FIELD_TYPE}.getByApiValue(v); }
 {SETTER_END}
 
    @Override

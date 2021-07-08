@@ -33,7 +33,7 @@ buildscript {
 repositories {
    jcenter()
    maven {
-      url 'https://mtschach.jfrog.io/artifactory/mss-repo'
+      url 'https://michassoftwareschmiede.jfrog.io/artifactory/mss-repo'
    }
    mavenLocal()
 }

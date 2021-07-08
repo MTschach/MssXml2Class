@@ -8,13 +8,15 @@ import de.mss.xml2class.interfaces.ApiEnumeration;
 
 public class VariableHolder extends ConstantHolder {
 
-   private String  lowerName  = null;
-   private String  upperName  = null;
-   private String  dateFormat = "yyyy-MM-dd HH:mm:ss.SSS";
-   private String  annotation = null;
-   private boolean required   = false;
-   private int     maxLength  = -1;
-   private int     minLength  = -1;
+   private String  lowerName       = null;
+   private String  upperName       = null;
+   private String  dateFormat      = "yyyy-MM-dd HH:mm:ss.SSS";
+   private String  annotation      = null;
+   private String  throwsException = null;
+   private boolean required        = false;
+   private boolean overrides       = false;
+   private int     maxLength       = -1;
+   private int     minLength       = -1;
 
    public VariableHolder() {
       // nothing to do here
@@ -113,6 +115,11 @@ public class VariableHolder extends ConstantHolder {
       } else {
          return v + ".toString()";
       }
+   }
+
+
+   public String getThrowsException() {
+      return this.throwsException;
    }
 
 
@@ -226,8 +233,18 @@ public class VariableHolder extends ConstantHolder {
    }
 
 
+   public void setOverrides(boolean v) {
+      this.overrides = v;
+   }
+
+
    public void setRequired(boolean v) {
       this.required = v;
+   }
+
+
+   public void setThrowsException(String v) {
+      this.throwsException = v;
    }
 
 
@@ -302,6 +319,11 @@ public class VariableHolder extends ConstantHolder {
       sb.append("   }" + this.nl);
 
       return sb.toString();
+   }
+
+
+   public String writeOverrides() {
+      return this.overrides ? "@Override" : "";
    }
 
 
@@ -412,6 +434,15 @@ public class VariableHolder extends ConstantHolder {
             + msg
             + "\");"
             + this.nl;
+   }
+
+
+   public String writeThrowsException() {
+      if (!Tools.isSet(this.throwsException)) {
+         return "";
+      }
+
+      return "throws " + this.throwsException;
    }
 
 

@@ -1,6 +1,6 @@
 package de.mss.foo;
 
-public class BarClass extends java.math.BigDecimal {
+public class BarClass extends java.math.BigDecimal implements java.io.Serializable {
    
 
 
@@ -36,14 +36,11 @@ public class BarClass extends java.math.BigDecimal {
    
 
 
-   public void setMasterfoo (java.util.Date v) { this.masterfoo = v; }
-   
+   public void setMasterfoo (java.util.Date v) throws java.lang.FormatException, de.mss.utils.exception.MssException { this.masterfoo = v; }
 
-   public void setList (java.util.List<de.mss.test.TestKlasse> v) { this.list = v; }
-   
+   public void setList (java.util.List<de.mss.test.TestKlasse> v)  { this.list = v; }
 
-   public void setList1 (java.util.List<String> v) { this.list1 = v; }
-   
+   public void setList1 (java.util.List<String> v)  { this.list1 = v; }
 
 
    @Override
