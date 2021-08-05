@@ -30,8 +30,9 @@ buildscript {
     }
 }
 
-apply from: 'https://raw.githubusercontent.com/MTschach/MssUtils/master/artifactory.gradle'
+apply from: 'https://raw.githubusercontent.com/MTschach/MssUtils/master/deploy.gradle'
 
+apply from: 'https://raw.githubusercontent.com/MTschach/MssUtils/master/artifactory.gradle'
 
 configurations {
    mainCompile
@@ -94,5 +95,3 @@ jar {
 
 // Define the main class for the application
 mainClassName = 'de.mss.xml2class.Xml2Class'
-
-apply from: 'https://raw.githubusercontent.com/MTschach/MssUtils/master/deploy.gradle'
