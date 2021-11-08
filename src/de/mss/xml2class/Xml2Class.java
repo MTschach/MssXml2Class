@@ -207,7 +207,7 @@ public class Xml2Class {
 
 
    private void readTemplates(File file, int maxDepth) throws IOException {
-      if (maxDepth <= 0) {
+      if (maxDepth < 0) {
          return;
       }
 
@@ -392,7 +392,7 @@ public class Xml2Class {
                if (v.isEnum()) {
                   sb.append(line.substring("{IS_ENUM}".length()));
                }
-            } else {
+            } else if (str.trim().length() != 0) {
                sb.append(line + this.nl);
             }
          }
@@ -464,6 +464,11 @@ public class Xml2Class {
    }
 
 
+   private String writeCheckRequiredInterface(boolean hasInterface) {
+      return (hasInterface ? ", " : " implements ") + "de.mss.net.webservice.IfCheckRequiredFields";
+   }
+
+
    private void writeClass(ClassHolder clazz) throws IOException {
       for (final Entry<String, String> entry : this.templateList.entrySet()) {
          writeClass(clazz, entry.getValue(), entry.getKey());
@@ -496,7 +501,8 @@ public class Xml2Class {
             .replaceAll("\\{VERSION\\}", clazz.getVersion())
             .replaceAll("\\{CLASS_NAME\\}", clazz.getName())
             .replaceAll("\\{BASE_CLASS\\}", clazz.getExtendsFrom())
-            .replaceAll("\\{INTERFACE\\}", clazz.getImplementsFrom());
+            .replaceAll("\\{INTERFACE\\}", clazz.getImplementsFrom())
+            .replaceAll("\\{INTERFACE_CHECK_REQUIRED_FIELDS\\}", writeCheckRequiredInterface(clazz.hasInterface()));
 
       final BufferedReader br = new BufferedReader(new StringReader(templ));
       String line = null;

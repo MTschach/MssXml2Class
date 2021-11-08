@@ -1,6 +1,9 @@
 package {PACKAGE_NAME};
 
-public class {CLASS_NAME}{BASE_CLASS}{INTERFACE} {
+public class {CLASS_NAME}
+{HAS_BASECLASS}         {BASE_CLASS}
+{HAS_NO_BASECLASS}          extends de.mss.net.webservice.CheckRequiredFields
+                        {INTERFACE}{INTERFACE_CHECK_REQUIRED_FIELDS} {
    {VERSION}
 
 
@@ -13,7 +16,6 @@ public class {CLASS_NAME}{BASE_CLASS}{INTERFACE} {
    /** {COMMENT} */
    {ANNOTATION}
    private {FIELD_TYPE} {FIELD_NAME_WITH_VALUE};
-   
 {VARIABLES_END}
    public {CLASS_NAME} () {
 {HAS_BASECLASS}      super();
@@ -23,7 +25,6 @@ public class {CLASS_NAME}{BASE_CLASS}{INTERFACE} {
 {GETTER_START}
    {OVERRIDES}
    public {FIELD_TYPE} get{METHOD_NAME} () { return this.{FIELD_NAME}; }
-   
 {GETTER_END}
 {SETTER_START}
    {OVERRIDES}
@@ -43,15 +44,17 @@ public class {CLASS_NAME}{BASE_CLASS}{INTERFACE} {
       sb.append("] ");
       return sb.toString();
    }
-{REQUIRED_START}
-{HAS_BASECLASS}   @Override
+   
+   
+   @Override
    public void checkRequiredFields() throws de.mss.utils.exception.MssException {
+{HAS_BASECLASS}      super.checkRequiredFields();
+{REQUIRED_START}
 {CHECK_REQUIRED_START}
       {CHECK}
 {CHECK_REQUIRED_END}
-{HAS_BASECLASS}      super.checkRequiredFields();
-   }
 {REQUIRED_END}
+   }
 {PRINT_METHODS_START}
 {METHOD}
 {PRINT_METHODS_END}

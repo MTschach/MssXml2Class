@@ -1,6 +1,8 @@
 package de.mss.foo;
 
-public class BarClass extends java.math.BigDecimal implements java.io.Serializable {
+public class BarClass
+          extends java.math.BigDecimal
+                         implements java.io.Serializable, de.mss.net.webservice.CheckRequiredFields {
    
 
 
@@ -9,37 +11,37 @@ public class BarClass extends java.math.BigDecimal implements java.io.Serializab
    /**  */
    
    private java.util.Date masterfoo;
-   
 
    /**  */
    
    private java.util.List<de.mss.test.TestKlasse> list;
-   
 
    /**  */
    @HeaderParam(value = "list1")
    private java.util.List<String> list1;
-   
 
    public BarClass () {
       super();
    }
    
 
+   
    public java.util.Date getMasterfoo () { return this.masterfoo; }
-   
 
+   
    public java.util.List<de.mss.test.TestKlasse> getList () { return this.list; }
-   
 
+   
    public java.util.List<String> getList1 () { return this.list1; }
+
+
    
-
-
    public void setMasterfoo (java.util.Date v) throws java.lang.FormatException, de.mss.utils.exception.MssException { this.masterfoo = v; }
 
+   
    public void setList (java.util.List<de.mss.test.TestKlasse> v)  { this.list = v; }
 
+   
    public void setList1 (java.util.List<String> v)  { this.list1 = v; }
 
 
@@ -60,9 +62,34 @@ public class BarClass extends java.math.BigDecimal implements java.io.Serializab
       sb.append("] ");
       return sb.toString();
    }
+   
+   
+   @Override
+   public void checkRequiredFields() throws de.mss.utils.exception.MssException {
+      super.checkRequiredFields();
+
+
+      if (this.masterfoo == null) {
+         throw new de.mss.utils.exception.MssException(de.mss.net.exception.ErrorCodes.ERROR_REQUIRED_FIELD_MISSING, "masterfoo must not be null");
+      }
+
+
+      if (this.list == null) {
+         throw new de.mss.utils.exception.MssException(de.mss.net.exception.ErrorCodes.ERROR_REQUIRED_FIELD_MISSING, "list must not be null");
+      }
+      if (this.list.isEmpty()) {
+         throw new de.mss.utils.exception.MssException(de.mss.net.exception.ErrorCodes.ERROR_REQUIRED_FIELD_MISSING, "list must not be empty");
+      }
+      for (de.mss.test.TestKlasse e : this.list) {
+         if (e == null) {
+            throw new de.mss.utils.exception.MssException(de.mss.net.exception.ErrorCodes.ERROR_REQUIRED_FIELD_MISSING, "list element nust not be null");
+         }
+         e.checkRequiredFields();
+      }
 
 
 
+   }
 
    public String writeList() {
       StringBuilder sb = new StringBuilder("size {" + this.list.size() + "} ");

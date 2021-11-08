@@ -25,4 +25,9 @@ public enum TestEnum implements ApiEnumeration {
    public String getApiValue() {
       return this.apiValue;
    }
+
+
+   public String getOtherValue() {
+      return this.otherValue;
+   }
 }

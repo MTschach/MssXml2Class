@@ -124,6 +124,9 @@ public class VariableHolder extends ConstantHolder {
 
 
    private boolean hasSubtypeRequiredFields(String subtype, Map<String, ClassHolder> classList) {
+      if (classList == null) {
+         return false;
+      }
 
       for (final Entry<String, ClassHolder> clazz : classList.entrySet()) {
          if (subtype.equals(clazz.getKey())) {
@@ -254,6 +257,21 @@ public class VariableHolder extends ConstantHolder {
    }
 
 
+   private StringBuilder writeListCheck(String subType, Map<String, ClassHolder> classList) {
+      final StringBuilder sb = new StringBuilder();
+      sb.append("      for (" + subType + " e : this." + this.getFieldName() + ") {" + this.nl);
+      sb.append("         if (e == null) {" + this.nl);
+      sb.append("   " + writeThrow("element must not be null"));
+      sb.append("         }" + this.nl);
+      if (hasSubtypeRequiredFields(subType, classList)) {
+         sb.append("         e.checkRequiredFields();" + this.nl);
+      }
+      sb.append("      }" + this.nl);
+
+      return sb;
+   }
+
+
    private String writeListValue() {
       final StringBuilder sb = new StringBuilder();
 
@@ -328,7 +346,7 @@ public class VariableHolder extends ConstantHolder {
 
 
    public String writeRequiredCheck(Map<String, ClassHolder> classList) {
-      if (!this.required) {
+      if (!this.required && !hasSubtypeRequiredFields(this.type, classList)) {
          return "";
       }
 
@@ -343,19 +361,13 @@ public class VariableHolder extends ConstantHolder {
       sb.append("      }" + this.nl);
       if ("String".equals(this.type)) {
          if (this.minLength == this.maxLength && this.minLength > 0) {
-            sb.append("      if (this." + getFieldName() + ".length() != " + this.maxLength + ") {" + this.nl);
-            sb.append(writeThrow(" must have a length of " + this.maxLength));
-            sb.append("      }" + this.nl);
+            sb.append("      checkStingLength(this." + getFieldName() + ", " + this.maxLength + ", \"" + getFieldName() + "\");" + this.nl);
          } else {
             if (this.minLength >= 0) {
-               sb.append("      if (this." + getFieldName() + ".length() < " + this.minLength + ") {" + this.nl);
-               sb.append(writeThrow("is too short"));
-               sb.append("      }" + this.nl);
+               sb.append("      checkMinStingLength(this." + getFieldName() + ", " + this.minLength + ", \"" + getFieldName() + "\");" + this.nl);
             }
             if (this.maxLength > 1) {
-               sb.append("      if (this." + getFieldName() + ".length() > " + this.maxLength + ") {" + this.nl);
-               sb.append(writeThrow("is too long"));
-               sb.append("      }" + this.nl);
+               sb.append("      checkMaxStingLength(this." + getFieldName() + ", " + this.maxLength + ", \"" + getFieldName() + "\");" + this.nl);
             }
          }
       }
@@ -370,6 +382,21 @@ public class VariableHolder extends ConstantHolder {
          sb.append("      if (this." + this.getFieldName() + ".length == 0) {" + this.nl);
          sb.append(writeThrow("must not be empty"));
          sb.append("      }" + this.nl);
+      }
+
+      if (isSimpleArray()) {
+         final String subType = this.type.substring(0, this.type.length() - 2);
+         sb.append(writeListCheck(subType, classList));
+      }
+
+      if (isList()) {
+         final String subType = this.type.substring(this.type.indexOf("List<") + 5, this.type.length() - 1);
+         sb.append(writeListCheck(subType, classList));
+      }
+
+      if (isVector()) {
+         final String subType = this.type.substring(this.type.indexOf("Vector<") + 7, this.type.length() - 1);
+         sb.append(writeListCheck(subType, classList));
       }
 
       if (hasSubtypeRequiredFields(this.type, classList)) {

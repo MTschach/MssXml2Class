@@ -57,17 +57,17 @@ sourceSets {
 }
 
 dependencies {
-   compile 'org.apache.logging.log4j:log4j-core:latest.release'
-   compile 'org.apache.logging.log4j:log4j-api:latest.release'
-   compile 'org.apache.logging.log4j:log4j-slf4j-impl:latest.release'
-   compile 'Mss:MssUtils:latest.release'
-   compile 'Mss:MssConfigTools:latest.release'
+   implementation 'org.apache.logging.log4j:log4j-core:latest.release'
+   implementation 'org.apache.logging.log4j:log4j-api:latest.release'
+   implementation 'org.apache.logging.log4j:log4j-slf4j-impl:latest.release'
+   implementation 'Mss:MssUtils:latest.release'
+   implementation 'Mss:MssConfigTools:latest.release'
    
-   compile group: 'commons-cli', name: 'commons-cli', version: '1.4'
+   implementation group: 'commons-cli', name: 'commons-cli', version: '1.4'
    
 
     // Use JUnit test framework
-    testCompile 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
 }
 
 task customFatJar(type: Jar) {

@@ -1,6 +1,8 @@
 package de.mss.foo;
 
-public class FooClass extends java.math.BigDecimal {
+public class FooClass
+          extends java.math.BigDecimal
+                         implements de.mss.net.webservice.CheckRequiredFields {
    
 
 
@@ -9,39 +11,39 @@ public class FooClass extends java.math.BigDecimal {
    /**  */
    
    private java.util.Date masterfoo;
-   
 
    /**  */
    
    private byte[] buffer;
-   
 
    /**  */
    
    private de.mss.xml2class.enumeration.TestEnum type;
-   
 
    public FooClass () {
       super();
    }
    
 
+   
    public java.util.Date getMasterfoo () { return this.masterfoo; }
-   
 
+   
    public byte[] getBuffer () { return this.buffer; }
-   
 
+   
    public de.mss.xml2class.enumeration.TestEnum getType () { return this.type; }
+
+
    
-
-
    public void setMasterfoo (java.util.Date v)  { this.masterfoo = v; }
 
+   
    public void setBuffer (byte[] v)  { this.buffer = v; }
 
+   
    public void setType (de.mss.xml2class.enumeration.TestEnum v)  { this.type = v; }
-   public void setType (String v)  { this.type = de.mss.xml2class.enumeration.TestEnum.getByApiValue(v); }
+      public void setType (String v)  { this.type = de.mss.xml2class.enumeration.TestEnum.getByApiValue(v); }
 
    @Override
    public String toString() {
@@ -60,24 +62,20 @@ public class FooClass extends java.math.BigDecimal {
       sb.append("] ");
       return sb.toString();
    }
-
+   
+   
    @Override
    public void checkRequiredFields() throws de.mss.utils.exception.MssException {
+      super.checkRequiredFields();
+
 
       if (this.masterfoo == null) {
          throw new de.mss.utils.exception.MssException(de.mss.net.exception.ErrorCodes.ERROR_REQUIRED_FIELD_MISSING, "masterfoo must not be null");
       }
 
 
-      
 
-      
-
-      super.checkRequiredFields();
    }
-
-
-
 
    public String writeBuffer() {
       StringBuilder sb = new StringBuilder("size {" + this.buffer.length + "} ");
@@ -86,8 +84,6 @@ public class FooClass extends java.math.BigDecimal {
       }
       return sb.toString();
    }
-
-
 
 
 

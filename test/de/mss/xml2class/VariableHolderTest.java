@@ -329,6 +329,11 @@ public class VariableHolderTest extends TestCase {
                  + "      }\n"
                  + "      if (this.variable.isEmpty()) {\n"
                  + "         throw new de.mss.utils.exception.MssException(de.mss.net.exception.ErrorCodes.ERROR_REQUIRED_FIELD_MISSING, \"variable must not be empty\");\n"
+                 + "      }\n"
+                 + "      for (Integer e : this.variable) {\n"
+                 + "         if (e == null) {\n"
+                 + "            throw new de.mss.utils.exception.MssException(de.mss.net.exception.ErrorCodes.ERROR_REQUIRED_FIELD_MISSING, \"variable element must not be null\");\n"
+                 + "         }\n"
                  + "      }\n";
       //@formatter:on
       assertEquals(exp, this.classUnderTest.writeRequiredCheck(getSubClasses(false)));
@@ -367,6 +372,11 @@ public class VariableHolderTest extends TestCase {
                  + "      }\n"
                  + "      if (this.variable.length == 0) {\n"
                  + "         throw new de.mss.utils.exception.MssException(de.mss.net.exception.ErrorCodes.ERROR_REQUIRED_FIELD_MISSING, \"variable must not be empty\");\n"
+                 + "      }\n"
+                 + "      for (int e : this.variable) {\n"
+                 + "         if (e == null) {\n"
+                 + "            throw new de.mss.utils.exception.MssException(de.mss.net.exception.ErrorCodes.ERROR_REQUIRED_FIELD_MISSING, \"variable element must not be null\");\n"
+                 + "         }\n"
                  + "      }\n";
       //@formatter:on
       assertEquals(exp, this.classUnderTest.writeRequiredCheck(getSubClasses(false)));
@@ -405,6 +415,11 @@ public class VariableHolderTest extends TestCase {
                  + "      }\n"
                  + "      if (this.variable.isEmpty()) {\n"
                  + "         throw new de.mss.utils.exception.MssException(de.mss.net.exception.ErrorCodes.ERROR_REQUIRED_FIELD_MISSING, \"variable must not be empty\");\n"
+                 + "      }\n"
+                 + "      for (Integer e : this.variable) {\n"
+                 + "         if (e == null) {\n"
+                 + "            throw new de.mss.utils.exception.MssException(de.mss.net.exception.ErrorCodes.ERROR_REQUIRED_FIELD_MISSING, \"variable element must not be null\");\n"
+                 + "         }\n"
                  + "      }\n";
       //@formatter:on
       assertEquals(exp, this.classUnderTest.writeRequiredCheck(getSubClasses(false)));
