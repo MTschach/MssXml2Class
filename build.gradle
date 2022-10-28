@@ -19,15 +19,7 @@ version = artifact.version
 
 // In this section you declare where to find the dependencies of your project
 buildscript {
-    repositories {
-        jcenter()
-        google()
-    }
-   dependencies {
-      classpath 'com.android.tools.build:gradle:3.2.1'
-      classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
-      classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:latest.release'
-    }
+   apply from: 'https://raw.githubusercontent.com/MTschach/MssUtils/master/buildscript.gradle'
 }
 
 apply from: 'https://raw.githubusercontent.com/MTschach/MssUtils/master/deploy.gradle'
@@ -57,17 +49,15 @@ sourceSets {
 }
 
 dependencies {
-   implementation 'org.apache.logging.log4j:log4j-core:latest.release'
-   implementation 'org.apache.logging.log4j:log4j-api:latest.release'
-   implementation 'org.apache.logging.log4j:log4j-slf4j-impl:latest.release'
-   implementation 'Mss:MssUtils:latest.release'
-   implementation 'Mss:MssConfigTools:latest.release'
-   
-   implementation group: 'commons-cli', name: 'commons-cli', version: '1.4'
-   
+   implementation       group: 'org.apache.logging.log4j'                     , name: 'log4j-core'                      , version: "${loggingVersion}"
+   implementation       group: 'org.apache.logging.log4j'                     , name: 'log4j-api'                       , version: "${loggingVersion}"
+   implementation       group: 'org.apache.logging.log4j'                     , name: 'log4j-slf4j-impl'                , version: "${loggingVersion}"
+   implementation       group: 'Mss'                                          , name: 'MssUtils'                        , version: 'latest.release'
+   implementation       group: 'Mss'                                          , name: 'MssConfigTools'                  , version: 'latest.release'
+   implementation       group: 'commons-cli'                                  , name: 'commons-cli'                     , version: "${commonsCliVersion}"
 
     // Use JUnit test framework
-    testImplementation 'junit:junit:4.12'
+   testImplementation   group: 'org.junit.jupiter'                            , name: 'junit-jupiter-engine'            , version: "${junitVersion}"
 }
 
 task customFatJar(type: Jar) {

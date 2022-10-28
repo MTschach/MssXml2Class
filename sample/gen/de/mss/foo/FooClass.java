@@ -1,11 +1,9 @@
 package de.mss.foo;
 
 public class FooClass
-          extends java.math.BigDecimal
-                         implements de.mss.net.webservice.CheckRequiredFields {
+    extends java.math.BigDecimal
+   , de.mss.net.webservice.IfCheckRequiredFields, de.mss.utils.logging.Logable {
    
-
-
 
 
    /**  */
@@ -46,21 +44,23 @@ public class FooClass
       public void setType (String v)  { this.type = de.mss.xml2class.enumeration.TestEnum.getByApiValue(v); }
 
    @Override
+   public java.util.Map<String,String> doLogging() {
+      java.util.Map<String, String> ret = new java.util.HashMap<>();
+      ret = de.mss.utils.logging.LoggingUtil.addLogging("Masterfoo", this.masterfoo, ret);
+      ret = de.mss.utils.logging.LoggingUtil.addLogging("Buffer", this.buffer, ret);
+      ret = de.mss.utils.logging.LoggingUtil.addLogging("Type", this.type, ret);
+
+      if(de.mss.utils.logging.Logable.class.isAssignable(super.getClass())) {
+         ret.addAll(super.doLogging());
+      } else {
+         ret = de.mss.utils.logging.LoggingUtil.addLogging("Superclass", super.toString(), ret);
+      }
+      return ret;
+   }
+
+   @Override
    public String toString() {
-      StringBuilder sb = new StringBuilder(getClass().getName() + "[ ");
-
-      if (this.masterfoo != null)
-         sb.append("Masterfoo {" + new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(this.masterfoo) + "} ");
-
-      if (this.buffer != null)
-         sb.append("Buffer {" + writeBuffer() + "} ");
-
-      if (this.type != null)
-         sb.append("Type {" + this.type.toString() + "} ");
-
-      sb.append(super.toString());
-      sb.append("] ");
-      return sb.toString();
+      return de.mss.utils.logging.LoggingUtil.getLogString(doLogging());
    }
    
    
@@ -68,23 +68,19 @@ public class FooClass
    public void checkRequiredFields() throws de.mss.utils.exception.MssException {
       super.checkRequiredFields();
 
-
       if (this.masterfoo == null) {
          throw new de.mss.utils.exception.MssException(de.mss.net.exception.ErrorCodes.ERROR_REQUIRED_FIELD_MISSING, "masterfoo must not be null");
       }
 
-
-
    }
 
-   public String writeBuffer() {
+   private String writeBuffer() {
       StringBuilder sb = new StringBuilder("size {" + this.buffer.length + "} ");
       for(int i=0; i<this.buffer.length; i++) {
          sb.append("[" + i + "] {" + this.buffer[i] + "} ");
       }
       return sb.toString();
    }
-
 
 
 

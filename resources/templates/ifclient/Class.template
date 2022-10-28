@@ -30,13 +30,12 @@ public class {CLASS_NAME}{BASE_CLASS} implements If{CLASS_NAME} {
 
    @Override
    public String toString() {
-      StringBuilder sb = new StringBuilder(getClass().getName() + "[ ");
+      StringBuilder sb = new StringBuilder(g);
 {TO_STRING_START}
       if (this.{FIELD_NAME} != null)
          sb.append("{PRINT_NAME} {" + {PRINT_VALUE} + "} ");
 {TO_STRING_END}
 {HAS_BASECLASS}      sb.append(super.toString());
-      sb.append("] ");
       return sb.toString();
    }
 {REQUIRED_START}

@@ -1,16 +1,18 @@
 package de.mss.xml2class;
 
-import org.junit.Test;
 
-import junit.framework.TestCase;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class ConstantHolderTest extends TestCase {
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+public class ConstantHolderTest {
 
    private ConstantHolder classUnderTest;
 
-   @Override
+   @BeforeEach
    public void setUp() throws Exception {
-      super.setUp();
 
       this.classUnderTest = new ConstantHolder();
       this.classUnderTest.setComment("a simple comment");
@@ -23,36 +25,36 @@ public class ConstantHolderTest extends TestCase {
    @Test
    public void testEmtpyValue() {
       this.classUnderTest.setValue("");
-      assertEquals("Comment", "a simple comment", this.classUnderTest.getComment());
-      assertEquals("Name", "constant_name", this.classUnderTest.getName());
-      assertEquals("Type", "Integer", this.classUnderTest.getType());
-      assertEquals("Value", "", this.classUnderTest.getValue());
-      assertEquals("Declaration name", "CONSTANT_NAME", this.classUnderTest.getDeclarationName());
-      assertEquals("Field with value", "CONSTANT_NAME", this.classUnderTest.getFieldWithValue());
+      assertEquals("a simple comment", this.classUnderTest.getComment());
+      assertEquals("constant_name", this.classUnderTest.getName());
+      assertEquals("Integer", this.classUnderTest.getType());
+      assertEquals("", this.classUnderTest.getValue());
+      assertEquals("CONSTANT_NAME", this.classUnderTest.getDeclarationName());
+      assertEquals("CONSTANT_NAME", this.classUnderTest.getFieldWithValue());
    }
 
 
    @Test
    public void testNullValue() {
       this.classUnderTest.setValue(null);
-      assertEquals("Comment", "a simple comment", this.classUnderTest.getComment());
-      assertEquals("Name", "constant_name", this.classUnderTest.getName());
-      assertEquals("Type", "Integer", this.classUnderTest.getType());
-      assertNull("Value is null", this.classUnderTest.getValue());
-      assertEquals("Declaration name", "CONSTANT_NAME", this.classUnderTest.getDeclarationName());
-      assertEquals("Field with value", "CONSTANT_NAME", this.classUnderTest.getFieldWithValue());
+      assertEquals("a simple comment", this.classUnderTest.getComment());
+      assertEquals("constant_name", this.classUnderTest.getName());
+      assertEquals("Integer", this.classUnderTest.getType());
+      assertNull(this.classUnderTest.getValue());
+      assertEquals("CONSTANT_NAME", this.classUnderTest.getDeclarationName());
+      assertEquals("CONSTANT_NAME", this.classUnderTest.getFieldWithValue());
    }
 
 
    @Test
    public void testStringNullValue() {
       this.classUnderTest.setType("String");
-      assertEquals("Comment", "a simple comment", this.classUnderTest.getComment());
-      assertEquals("Name", "constant_name", this.classUnderTest.getName());
-      assertEquals("Type", "String", this.classUnderTest.getType());
-      assertEquals("Value", "null", this.classUnderTest.getValue());
-      assertEquals("Declaration name", "CONSTANT_NAME", this.classUnderTest.getDeclarationName());
-      assertEquals("Field with value", "CONSTANT_NAME = null", this.classUnderTest.getFieldWithValue());
+      assertEquals("a simple comment", this.classUnderTest.getComment());
+      assertEquals("constant_name", this.classUnderTest.getName());
+      assertEquals("String", this.classUnderTest.getType());
+      assertEquals("null", this.classUnderTest.getValue());
+      assertEquals("CONSTANT_NAME", this.classUnderTest.getDeclarationName());
+      assertEquals("CONSTANT_NAME = null", this.classUnderTest.getFieldWithValue());
    }
 
 
@@ -60,24 +62,24 @@ public class ConstantHolderTest extends TestCase {
    public void testStringValue() {
       this.classUnderTest.setType("String");
       this.classUnderTest.setValue("a value");
-      assertEquals("Comment", "a simple comment", this.classUnderTest.getComment());
-      assertEquals("Name", "constant_name", this.classUnderTest.getName());
-      assertEquals("Type", "String", this.classUnderTest.getType());
-      assertEquals("Value", "a value", this.classUnderTest.getValue());
-      assertEquals("Declaration name", "CONSTANT_NAME", this.classUnderTest.getDeclarationName());
-      assertEquals("Field with value", "CONSTANT_NAME = \"a value\"", this.classUnderTest.getFieldWithValue());
+      assertEquals("a simple comment", this.classUnderTest.getComment());
+      assertEquals("constant_name", this.classUnderTest.getName());
+      assertEquals("String", this.classUnderTest.getType());
+      assertEquals("a value", this.classUnderTest.getValue());
+      assertEquals("CONSTANT_NAME", this.classUnderTest.getDeclarationName());
+      assertEquals("CONSTANT_NAME = \"a value\"", this.classUnderTest.getFieldWithValue());
    }
 
 
    @Test
    public void testValue() {
       this.classUnderTest.setValue("123");
-      assertEquals("Comment", "a simple comment", this.classUnderTest.getComment());
-      assertEquals("Name", "constant_name", this.classUnderTest.getName());
-      assertEquals("Type", "Integer", this.classUnderTest.getType());
-      assertEquals("Value", "123", this.classUnderTest.getValue());
-      assertEquals("Declaration name", "CONSTANT_NAME", this.classUnderTest.getDeclarationName());
-      assertEquals("Field with value", "CONSTANT_NAME = 123", this.classUnderTest.getFieldWithValue());
+      assertEquals("a simple comment", this.classUnderTest.getComment());
+      assertEquals("constant_name", this.classUnderTest.getName());
+      assertEquals("Integer", this.classUnderTest.getType());
+      assertEquals("123", this.classUnderTest.getValue());
+      assertEquals("CONSTANT_NAME", this.classUnderTest.getDeclarationName());
+      assertEquals("CONSTANT_NAME = 123", this.classUnderTest.getFieldWithValue());
    }
 
 }

@@ -1,13 +1,16 @@
 package de.mss.xml2class;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import junit.framework.TestCase;
-
-public class VariableHolderTest extends TestCase {
+public class VariableHolderTest {
 
    private VariableHolder classUnderTest;
 
@@ -28,10 +31,8 @@ public class VariableHolderTest extends TestCase {
    }
 
 
-   @Override
+   @BeforeEach
    public void setUp() throws Exception {
-      super.setUp();
-
       this.classUnderTest = new VariableHolder();
       this.classUnderTest.setAnnotation("Anotation");
       this.classUnderTest.setComment("a comment");
@@ -44,45 +45,45 @@ public class VariableHolderTest extends TestCase {
    @Test
    public void test() {
       this.classUnderTest.setDateFormat("yyMMdd");
-      assertEquals("Annotation", "Anotation", this.classUnderTest.getAnnotation());
-      assertEquals("Comment", "a comment", this.classUnderTest.getComment());
-      assertEquals("DateFormat", "yyMMdd", this.classUnderTest.getDateFormat());
-      assertEquals("Name", "variable", this.classUnderTest.getName());
-      assertEquals("Type", "Integer", this.classUnderTest.getType());
-      assertEquals("Value", "123", this.classUnderTest.getValue());
+      assertEquals("Anotation", this.classUnderTest.getAnnotation());
+      assertEquals("a comment", this.classUnderTest.getComment());
+      assertEquals("yyMMdd", this.classUnderTest.getDateFormat());
+      assertEquals("variable", this.classUnderTest.getName());
+      assertEquals("Integer", this.classUnderTest.getType());
+      assertEquals("123", this.classUnderTest.getValue());
 
-      assertEquals("Declaration name", "variable", this.classUnderTest.getDeclarationName());
-      assertEquals("Field name", "variable", this.classUnderTest.getFieldName());
-      assertEquals("Field with value", "variable = 123", this.classUnderTest.getFieldWithValue());
-      assertEquals("Method name", "Variable", this.classUnderTest.getMethodName());
-      assertEquals("PrintValue", "this.variable.toString()", this.classUnderTest.getPrintValue());
+      assertEquals("variable", this.classUnderTest.getDeclarationName());
+      assertEquals("variable", this.classUnderTest.getFieldName());
+      assertEquals("variable = 123", this.classUnderTest.getFieldWithValue());
+      assertEquals("Variable", this.classUnderTest.getMethodName());
+      assertEquals("this.variable.toString()", this.classUnderTest.getPrintValue());
 
-      assertFalse("Required", this.classUnderTest.isRequired());
-      assertFalse("is Vector", this.classUnderTest.isVector());
-      assertFalse("is Map", this.classUnderTest.isMap());
-      assertFalse("is simple array", this.classUnderTest.isSimpleArray());
-      assertFalse("is List", this.classUnderTest.isList());
+      assertFalse(this.classUnderTest.isRequired());
+      assertFalse(this.classUnderTest.isVector());
+      assertFalse(this.classUnderTest.isMap());
+      assertFalse(this.classUnderTest.isSimpleArray());
+      assertFalse(this.classUnderTest.isList());
    }
 
 
    @Test
    public void testBigDecimal() {
       this.classUnderTest.setType("java.math.BigDecimal");
-      assertEquals("Print Value", "this.variable.toString()", this.classUnderTest.getPrintValue());
+      assertEquals("this.variable.toString()", this.classUnderTest.getPrintValue());
    }
 
 
    @Test
    public void testBigInteger() {
       this.classUnderTest.setType("java.math.BigInteger");
-      assertEquals("Print Value", "this.variable.toString()", this.classUnderTest.getPrintValue());
+      assertEquals("this.variable.toString()", this.classUnderTest.getPrintValue());
    }
 
 
    @Test
    public void testBoolean() {
       this.classUnderTest.setType("Boolean");
-      assertEquals("Print Value", "this.variable.toString()", this.classUnderTest.getPrintValue());
+      assertEquals("this.variable.toString()", this.classUnderTest.getPrintValue());
    }
 
 
@@ -90,49 +91,49 @@ public class VariableHolderTest extends TestCase {
    public void testDate() {
       this.classUnderTest.setType("java.util.Date");
       this.classUnderTest.setDateFormat("yyyy-MM-dd");
-      assertEquals("Print Value", "new java.text.SimpleDateFormat(\"yyyy-MM-dd\").format(this.variable)", this.classUnderTest.getPrintValue());
+      assertEquals("new java.text.SimpleDateFormat(\"yyyy-MM-dd\").format(this.variable)", this.classUnderTest.getPrintValue());
    }
 
 
    @Test
    public void testDouble() {
       this.classUnderTest.setType("Double");
-      assertEquals("Print Value", "this.variable.toString()", this.classUnderTest.getPrintValue());
+      assertEquals("this.variable.toString()", this.classUnderTest.getPrintValue());
    }
 
 
    @Test
    public void testFirstUpper() {
       this.classUnderTest.setName("Variable");
-      assertEquals("Method name", "Variable", this.classUnderTest.getMethodName());
+      assertEquals("Variable", this.classUnderTest.getMethodName());
    }
 
 
    @Test
    public void testFloat() {
       this.classUnderTest.setType("Float");
-      assertEquals("Print Value", "this.variable.toString()", this.classUnderTest.getPrintValue());
+      assertEquals("this.variable.toString()", this.classUnderTest.getPrintValue());
    }
 
 
    @Test
    public void testInteger() {
       this.classUnderTest.setType("Integer");
-      assertEquals("Print Value", "this.variable.toString()", this.classUnderTest.getPrintValue());
+      assertEquals("this.variable.toString()", this.classUnderTest.getPrintValue());
    }
 
 
    @Test
    public void testList() {
       this.classUnderTest.setType("java.util.List<String>");
-      assertEquals("Print Value", "writeVariable()", this.classUnderTest.getPrintValue());
+      assertEquals("writeVariable()", this.classUnderTest.getPrintValue());
    }
 
 
    @Test
    public void testMap() {
       this.classUnderTest.setType("java.util.Map<String, String>");
-      assertEquals("Print Value", "writeVariable()", this.classUnderTest.getPrintValue());
+      assertEquals("writeVariable()", this.classUnderTest.getPrintValue());
    }
 
 
@@ -140,103 +141,103 @@ public class VariableHolderTest extends TestCase {
    public void testNameIsNull() {
       this.classUnderTest.setName(null);
 
-      assertNull("Declaration name", this.classUnderTest.getDeclarationName());
-      assertNull("Method name", this.classUnderTest.getMethodName());
-      assertNull("Field name", this.classUnderTest.getFieldName());
+      assertNull(this.classUnderTest.getDeclarationName());
+      assertNull(this.classUnderTest.getMethodName());
+      assertNull(this.classUnderTest.getFieldName());
    }
 
 
    @Test
    public void testOtherType() {
       this.classUnderTest.setType("de.mss.test.MyType");
-      assertEquals("Print Value", "this.variable.toString()", this.classUnderTest.getPrintValue());
+      assertEquals("this.variable.toString()", this.classUnderTest.getPrintValue());
    }
 
 
    @Test
    public void testSimpleArray() {
       this.classUnderTest.setType("long[]");
-      assertEquals("Print Value", "writeVariable()", this.classUnderTest.getPrintValue());
+      assertEquals("writeVariable()", this.classUnderTest.getPrintValue());
    }
 
 
    @Test
    public void testSimpleBoolean() {
       this.classUnderTest.setType("boolean");
-      assertEquals("Print Value", "this.variable", this.classUnderTest.getPrintValue());
+      assertEquals("this.variable", this.classUnderTest.getPrintValue());
    }
 
 
    @Test
    public void testSimpleByte() {
       this.classUnderTest.setType("byte");
-      assertEquals("Print Value", "this.variable", this.classUnderTest.getPrintValue());
+      assertEquals("this.variable", this.classUnderTest.getPrintValue());
    }
 
 
    @Test
    public void testSimpleDouble() {
       this.classUnderTest.setType("double");
-      assertEquals("Print Value", "this.variable", this.classUnderTest.getPrintValue());
+      assertEquals("this.variable", this.classUnderTest.getPrintValue());
    }
 
 
    @Test
    public void testSimpleFloat() {
       this.classUnderTest.setType("float");
-      assertEquals("Print Value", "this.variable", this.classUnderTest.getPrintValue());
+      assertEquals("this.variable", this.classUnderTest.getPrintValue());
    }
 
 
    @Test
    public void testSimpleInt() {
       this.classUnderTest.setType("int");
-      assertEquals("Print Value", "this.variable", this.classUnderTest.getPrintValue());
+      assertEquals("this.variable", this.classUnderTest.getPrintValue());
    }
 
 
    @Test
    public void testSimpleLong() {
       this.classUnderTest.setType("long");
-      assertEquals("Print Value", "this.variable", this.classUnderTest.getPrintValue());
+      assertEquals("this.variable", this.classUnderTest.getPrintValue());
    }
 
 
    @Test
    public void testSimpleShort() {
       this.classUnderTest.setType("short");
-      assertEquals("Print Value", "this.variable", this.classUnderTest.getPrintValue());
+      assertEquals("this.variable", this.classUnderTest.getPrintValue());
    }
 
 
    @Test
    public void testString() {
       this.classUnderTest.setType("String");
-      assertEquals("Print Value", "this.variable", this.classUnderTest.getPrintValue());
+      assertEquals("this.variable", this.classUnderTest.getPrintValue());
       this.classUnderTest.setName("password");
-      assertEquals("Print Value", "\"****\"", this.classUnderTest.getPrintValue());
+      assertEquals("\"****\"", this.classUnderTest.getPrintValue());
    }
 
 
    @Test
    public void testToLowerOnce() {
       this.classUnderTest.setName("Variable");
-      assertEquals("Field name", "variable", this.classUnderTest.getFieldName());
-      assertEquals("Field name", "variable", this.classUnderTest.getFieldName());
+      assertEquals("variable", this.classUnderTest.getFieldName());
+      assertEquals("variable", this.classUnderTest.getFieldName());
    }
 
 
    @Test
    public void testToUpperOnce() {
-      assertEquals("Method name", "Variable", this.classUnderTest.getMethodName());
-      assertEquals("Method name", "Variable", this.classUnderTest.getMethodName());
+      assertEquals("Variable", this.classUnderTest.getMethodName());
+      assertEquals("Variable", this.classUnderTest.getMethodName());
    }
 
 
    @Test
    public void testVector() {
       this.classUnderTest.setType("java.util.Vector<String>");
-      assertEquals("Print Value", "writeVariable()", this.classUnderTest.getPrintValue());
+      assertEquals("writeVariable()", this.classUnderTest.getPrintValue());
    }
 
 
@@ -244,7 +245,7 @@ public class VariableHolderTest extends TestCase {
    public void testWriteList() {
       this.classUnderTest.setType("java.util.List<String>");
       //@formatter:off
-      final String exp = "   public String writeVariable() {\n"
+      final String exp = "   private String writeVariable() {\n"
                  + "      StringBuilder sb = new StringBuilder(\"size {\" + this.variable.size() + \"} \");\n"
                  + "      for(int i=0; i<this.variable.size(); i++) {\n"
                  + "         if (this.variable.get(i) != null) sb.append(\"[\" + i + \"] {\" + this.variable.get(i) + \"} \");\n"
@@ -261,7 +262,7 @@ public class VariableHolderTest extends TestCase {
    public void testWriteListInt() {
       this.classUnderTest.setType("java.util.List<int>");
       //@formatter:off
-      final String exp = "   public String writeVariable() {\n"
+      final String exp = "   private String writeVariable() {\n"
                  + "      StringBuilder sb = new StringBuilder(\"size {\" + this.variable.size() + \"} \");\n"
                  + "      for(int i=0; i<this.variable.size(); i++) {\n"
                  + "         sb.append(\"[\" + i + \"] {\" + this.variable.get(i) + \"} \");\n"
@@ -278,7 +279,7 @@ public class VariableHolderTest extends TestCase {
    public void testWriteMap() {
       this.classUnderTest.setType("java.util.Map<String, Integer>");
       //@formatter:off
-      final String exp = "   public String writeVariable() {\n"
+      final String exp = "   private String writeVariable() {\n"
                  + "      StringBuilder sb = new StringBuilder(\"size {\" + this.variable.size() + \"} \");\n"
                  + "      for(java.util.Map.Entry<String, Integer> e : this.variable.entrySet()) {\n"
                  + "         if (e.getValue() != null) sb.append(\"[\" + e.getKey() + \"] {\" + e.getValue().toString() + \"} \");\n"
@@ -295,7 +296,7 @@ public class VariableHolderTest extends TestCase {
    public void testWriteMapInt() {
       this.classUnderTest.setType("java.util.Map<String,int>");
       //@formatter:off
-      final String exp = "   public String writeVariable() {\n"
+      final String exp = "   private String writeVariable() {\n"
                  + "      StringBuilder sb = new StringBuilder(\"size {\" + this.variable.size() + \"} \");\n"
                  + "      for(java.util.Map.Entry<String,int> e : this.variable.entrySet()) {\n"
                  + "         sb.append(\"[\" + e.getKey() + \"] {\" + e.getValue() + \"} \");\n"
@@ -430,7 +431,7 @@ public class VariableHolderTest extends TestCase {
    public void testWriteSimpleArray() {
       this.classUnderTest.setType("Integer[]");
       //@formatter:off
-      final String exp = "   public String writeVariable() {\n"
+      final String exp = "   private String writeVariable() {\n"
                  + "      StringBuilder sb = new StringBuilder(\"size {\" + this.variable.length + \"} \");\n"
                  + "      for(int i=0; i<this.variable.length; i++) {\n"
                  + "         if (this.variable[i] != null) sb.append(\"[\" + i + \"] {\" + this.variable[i].toString() + \"} \");\n"
@@ -447,7 +448,7 @@ public class VariableHolderTest extends TestCase {
    public void testWriteSimpleArrayInt() {
       this.classUnderTest.setType("int[]");
       //@formatter:off
-      final String exp = "   public String writeVariable() {\n"
+      final String exp = "   private String writeVariable() {\n"
                  + "      StringBuilder sb = new StringBuilder(\"size {\" + this.variable.length + \"} \");\n"
                  + "      for(int i=0; i<this.variable.length; i++) {\n"
                  + "         sb.append(\"[\" + i + \"] {\" + this.variable[i] + \"} \");\n"
@@ -464,7 +465,7 @@ public class VariableHolderTest extends TestCase {
    public void testWriteVector() {
       this.classUnderTest.setType("java.util.Vector<String>");
       //@formatter:off
-      final String exp = "   public String writeVariable() {\n"
+      final String exp = "   private String writeVariable() {\n"
                  + "      StringBuilder sb = new StringBuilder(\"size {\" + this.variable.size() + \"} \");\n"
                  + "      for(int i=0; i<this.variable.size(); i++) {\n"
                  + "         if (this.variable.get(i) != null) sb.append(\"[\" + i + \"] {\" + this.variable.get(i) + \"} \");\n"
@@ -481,7 +482,7 @@ public class VariableHolderTest extends TestCase {
    public void testWriteVectorBoolean() {
       this.classUnderTest.setType("java.util.Vector<boolean>");
       //@formatter:off
-      final String exp = "   public String writeVariable() {\n"
+      final String exp = "   private String writeVariable() {\n"
                  + "      StringBuilder sb = new StringBuilder(\"size {\" + this.variable.size() + \"} \");\n"
                  + "      for(int i=0; i<this.variable.size(); i++) {\n"
                  + "         sb.append(\"[\" + i + \"] {\" + this.variable.get(i) + \"} \");\n"

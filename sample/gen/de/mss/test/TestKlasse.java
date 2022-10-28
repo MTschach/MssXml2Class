@@ -1,11 +1,9 @@
 package de.mss.test;
 
 public class TestKlasse
-          extends de.mss.net.webservice.CheckRequiredFields
-                         implements java.io.Serializable, de.mss.net.webservice.CheckRequiredFields {
+   extends de.mss.net.webservice.CheckRequiredFields
+    implements java.io.Serializable, de.mss.net.webservice.IfCheckRequiredFields, de.mss.utils.logging.Logable {
    
-
-
 
    /** ne Konstante */
    public static final String EINE_KONSTANTE = "irgendwas";
@@ -120,64 +118,44 @@ public class TestKlasse
 
 
    @Override
+   public java.util.Map<String,String> doLogging() {
+      java.util.Map<String, String> ret = new java.util.HashMap<>();
+      ret = de.mss.utils.logging.LoggingUtil.addLogging("SessionId", this.sessionId, ret);
+      ret = de.mss.utils.logging.LoggingUtil.addLogging("Bla", this.bla, ret);
+      ret = de.mss.utils.logging.LoggingUtil.addLogging("Foo", this.foo, ret);
+      ret = de.mss.utils.logging.LoggingUtil.addLogging("BarMap", this.barMap, ret);
+      ret = de.mss.utils.logging.LoggingUtil.addLogging("Bar", this.bar, ret);
+      ret = de.mss.utils.logging.LoggingUtil.addLogging("LoginPassword", this.loginPassword, ret);
+      ret = de.mss.utils.logging.LoggingUtil.addLogging("Description", this.description, ret);
+      ret = de.mss.utils.logging.LoggingUtil.addLogging("CountryCode", this.countryCode, ret);
+      ret = de.mss.utils.logging.LoggingUtil.addLogging("MinStringValue", this.minStringValue, ret);
+      ret = de.mss.utils.logging.LoggingUtil.addLogging("MaxStringValue", this.maxStringValue, ret);
+
+      return ret;
+   }
+
+   @Override
    public String toString() {
-      StringBuilder sb = new StringBuilder(getClass().getName() + "[ ");
-
-      if (this.sessionId != null)
-         sb.append("SessionId {" + this.sessionId.toString() + "} ");
-
-      if (this.bla != null)
-         sb.append("Bla {" + this.bla.toString() + "} ");
-
-      if (this.foo != null)
-         sb.append("Foo {" + this.foo.toString() + "} ");
-
-      if (this.barMap != null)
-         sb.append("BarMap {" + writeBarMap() + "} ");
-
-      if (this.bar != null)
-         sb.append("Bar {" + this.bar.toString() + "} ");
-
-      if (this.loginPassword != null)
-         sb.append("LoginPassword {" + "****" + "} ");
-
-      if (this.description != null)
-         sb.append("Description {" + this.description + "} ");
-
-      if (this.countryCode != null)
-         sb.append("CountryCode {" + this.countryCode + "} ");
-
-      if (this.minStringValue != null)
-         sb.append("MinStringValue {" + this.minStringValue + "} ");
-
-      if (this.maxStringValue != null)
-         sb.append("MaxStringValue {" + this.maxStringValue + "} ");
-
-      sb.append("] ");
-      return sb.toString();
+      return de.mss.utils.logging.LoggingUtil.getLogString(doLogging());
    }
    
    
    @Override
    public void checkRequiredFields() throws de.mss.utils.exception.MssException {
 
-
       if (this.bla == null) {
          throw new de.mss.utils.exception.MssException(de.mss.net.exception.ErrorCodes.ERROR_REQUIRED_FIELD_MISSING, "bla must not be null");
       }
-
 
       if (this.foo == null) {
          throw new de.mss.utils.exception.MssException(de.mss.net.exception.ErrorCodes.ERROR_REQUIRED_FIELD_MISSING, "foo must not be null");
       }
       this.foo.checkRequiredFields();
 
-
       if (this.bar == null) {
          throw new de.mss.utils.exception.MssException(de.mss.net.exception.ErrorCodes.ERROR_REQUIRED_FIELD_MISSING, "bar must not be null");
       }
       this.bar.checkRequiredFields();
-
 
       if (this.description == null) {
          throw new de.mss.utils.exception.MssException(de.mss.net.exception.ErrorCodes.ERROR_REQUIRED_FIELD_MISSING, "description must not be null");
@@ -185,36 +163,30 @@ public class TestKlasse
       checkMinStingLength(this.description, 2, "description");
       checkMaxStingLength(this.description, 50, "description");
 
-
       if (this.countryCode == null) {
          throw new de.mss.utils.exception.MssException(de.mss.net.exception.ErrorCodes.ERROR_REQUIRED_FIELD_MISSING, "countryCode must not be null");
       }
       checkStingLength(this.countryCode, 2, "countryCode");
-
 
       if (this.minStringValue == null) {
          throw new de.mss.utils.exception.MssException(de.mss.net.exception.ErrorCodes.ERROR_REQUIRED_FIELD_MISSING, "minStringValue must not be null");
       }
       checkMinStingLength(this.minStringValue, 2, "minStringValue");
 
-
       if (this.maxStringValue == null) {
          throw new de.mss.utils.exception.MssException(de.mss.net.exception.ErrorCodes.ERROR_REQUIRED_FIELD_MISSING, "maxStringValue must not be null");
       }
       checkMaxStingLength(this.maxStringValue, 50, "maxStringValue");
 
-
-
    }
 
-   public String writeBarMap() {
+   private String writeBarMap() {
       StringBuilder sb = new StringBuilder("size {" + this.barMap.size() + "} ");
       for(java.util.Map.Entry<String, de.mss.foo.FooClass> e : this.barMap.entrySet()) {
          if (e.getValue() != null) sb.append("[" + e.getKey() + "] {" + e.getValue().toString() + "} ");
       }
       return sb.toString();
    }
-
 
 
 }

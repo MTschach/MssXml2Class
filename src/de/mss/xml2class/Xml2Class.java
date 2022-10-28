@@ -69,7 +69,7 @@ public class Xml2Class {
 
 
    public void doWork() throws ParserConfigurationException, SAXException, IOException {
-      System.out.println("Running MssXml2Class version 1.3.1");
+      System.out.println("Running MssXml2Class version 1.4.2");
       readXmlFiles(new File(this.inputPath));
 
       readTemplates(this.templatePath);
@@ -515,6 +515,14 @@ public class Xml2Class {
          } else if (line.startsWith("{HAS_NO_BASECLASS}")) {
             if (!clazz.hasBaseClass()) {
                sb.append(line.substring("{HAS_NO_BASECLASS}".length()) + this.nl);
+            }
+         } else if (line.startsWith("{HAS_INTERFACE}")) {
+            if (clazz.hasInterface()) {
+               sb.append(line.substring("{HAS_INTERFACE}".length()) + this.nl);
+            }
+         } else if (line.startsWith("{HAS_NO_INTERFACE}")) {
+            if (!clazz.hasInterface()) {
+               sb.append(line.substring("{HAS_NO_INTERFACE}".length()) + this.nl);
             }
          } else {
             sb.append(line + this.nl);

@@ -219,7 +219,7 @@ public class VariableHolder extends ConstantHolder {
 
 
    public void setMaxLength(String value) {
-      if (value == null || value.isEmpty()) {
+      if ((value == null) || value.isEmpty()) {
          return;
       }
 
@@ -228,7 +228,7 @@ public class VariableHolder extends ConstantHolder {
 
 
    public void setMinLength(String value) {
-      if (value == null || value.isEmpty()) {
+      if ((value == null) || value.isEmpty()) {
          return;
       }
 
@@ -277,7 +277,7 @@ public class VariableHolder extends ConstantHolder {
 
       final String subType = this.type.substring(this.type.indexOf("List<") + 5, this.type.length() - 1);
 
-      sb.append("   public String write" + getMethodName() + "() {" + this.nl);
+      sb.append("   private String write" + getMethodName() + "() {" + this.nl);
       sb.append("      StringBuilder sb = new StringBuilder(\"size {\" + this." + getFieldName() + ".size() + \"} \");" + this.nl);
 
       sb.append("      for(int i=0; i<this." + getFieldName() + ".size(); i++) {" + this.nl);
@@ -312,7 +312,7 @@ public class VariableHolder extends ConstantHolder {
 
       final String[] subType = this.type.substring(this.type.indexOf("Map<") + 4, this.type.length() - 1).split(",");
 
-      sb.append("   public String write" + getMethodName() + "() {" + this.nl);
+      sb.append("   private String write" + getMethodName() + "() {" + this.nl);
       sb.append("      StringBuilder sb = new StringBuilder(\"size {\" + this." + getFieldName() + ".size() + \"} \");" + this.nl);
 
       sb.append("      for(java.util.Map.Entry<" + subType[0] + "," + subType[1] + "> e : this." + getFieldName() + ".entrySet()) {" + this.nl);
@@ -360,14 +360,14 @@ public class VariableHolder extends ConstantHolder {
       sb.append(writeThrow("must not be null"));
       sb.append("      }" + this.nl);
       if ("String".equals(this.type)) {
-         if (this.minLength == this.maxLength && this.minLength > 0) {
-            sb.append("      checkStingLength(this." + getFieldName() + ", " + this.maxLength + ", \"" + getFieldName() + "\");" + this.nl);
+         if ((this.minLength == this.maxLength) && (this.minLength > 0)) {
+            sb.append("      checkStringLength(this." + getFieldName() + ", " + this.maxLength + ", \"" + getFieldName() + "\");" + this.nl);
          } else {
             if (this.minLength >= 0) {
-               sb.append("      checkMinStingLength(this." + getFieldName() + ", " + this.minLength + ", \"" + getFieldName() + "\");" + this.nl);
+               sb.append("      checkMinStringLength(this." + getFieldName() + ", " + this.minLength + ", \"" + getFieldName() + "\");" + this.nl);
             }
             if (this.maxLength > 1) {
-               sb.append("      checkMaxStingLength(this." + getFieldName() + ", " + this.maxLength + ", \"" + getFieldName() + "\");" + this.nl);
+               sb.append("      checkMaxStringLength(this." + getFieldName() + ", " + this.maxLength + ", \"" + getFieldName() + "\");" + this.nl);
             }
          }
       }
@@ -413,7 +413,7 @@ public class VariableHolder extends ConstantHolder {
 
       final String subType = this.type.substring(0, this.type.length() - 2);
 
-      sb.append("   public String write" + getMethodName() + "() {" + this.nl);
+      sb.append("   private String write" + getMethodName() + "() {" + this.nl);
       sb.append("      StringBuilder sb = new StringBuilder(\"size {\" + this." + getFieldName() + ".length + \"} \");" + this.nl);
 
       sb.append("      for(int i=0; i<this." + getFieldName() + ".length; i++) {" + this.nl);
@@ -478,7 +478,7 @@ public class VariableHolder extends ConstantHolder {
 
       final String subType = this.type.substring(this.type.indexOf("Vector<") + 7, this.type.length() - 1);
 
-      sb.append("   public String write" + getMethodName() + "() {" + this.nl);
+      sb.append("   private String write" + getMethodName() + "() {" + this.nl);
       sb.append("      StringBuilder sb = new StringBuilder(\"size {\" + this." + getFieldName() + ".size() + \"} \");" + this.nl);
 
       sb.append("      for(int i=0; i<this." + getFieldName() + ".size(); i++) {" + this.nl);

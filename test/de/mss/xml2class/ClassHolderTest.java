@@ -1,10 +1,13 @@
 package de.mss.xml2class;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class ClassHolderTest extends TestCase {
+public class ClassHolderTest {
 
    private ClassHolder classUnderTest;
 
@@ -27,10 +30,8 @@ public class ClassHolderTest extends TestCase {
    }
 
 
-   @Override
+   @BeforeEach
    public void setUp() throws Exception {
-      super.setUp();
-
       this.classUnderTest = new ClassHolder();
       this.classUnderTest.setComment("a comment");
       this.classUnderTest.setName("TestClass");
@@ -44,9 +45,9 @@ public class ClassHolderTest extends TestCase {
       this.classUnderTest.setExtendsFrom("MyBaseClass");
       this.classUnderTest.setImplementsFrom("MyInterfaceClass");
       this.classUnderTest.setVersion(null);
-      assertEquals("Extends From", " extends MyBaseClass", this.classUnderTest.getExtendsFrom());
-      assertEquals("Implements", " implements MyInterfaceClass", this.classUnderTest.getImplementsFrom());
-      assertEquals("Version", "", this.classUnderTest.getVersion());
+      assertEquals(" extends MyBaseClass", this.classUnderTest.getExtendsFrom());
+      assertEquals(" implements MyInterfaceClass", this.classUnderTest.getImplementsFrom());
+      assertEquals("", this.classUnderTest.getVersion());
    }
 
 
@@ -71,17 +72,17 @@ public class ClassHolderTest extends TestCase {
 
    @Test
    public void testOk() {
-      assertEquals("comment", "a comment", this.classUnderTest.getComment());
-      assertEquals("ClassName", "TestClass", this.classUnderTest.getName());
-      assertEquals("package", "de.mss.xml2class.test", this.classUnderTest.getPackageName());
-      assertEquals("Extends From", "", this.classUnderTest.getExtendsFrom());
-      assertEquals("Implements", "", this.classUnderTest.getImplementsFrom());
-      assertEquals("Version", "private static final long serialVersionUID = 123l;", this.classUnderTest.getVersion());
-      assertNotNull("constants", this.classUnderTest.getConstants());
-      assertNotNull("variables", this.classUnderTest.getVariables());
-      assertNotNull("specialMethods", this.classUnderTest.getSpecialMethods());
-      assertFalse("hasRequiredField", this.classUnderTest.hasRequiredFields());
-      assertFalse("hasBaseClass", this.classUnderTest.hasBaseClass());
-      assertFalse("hasInterface", this.classUnderTest.hasInterface());
+      assertEquals("a comment", this.classUnderTest.getComment());
+      assertEquals("TestClass", this.classUnderTest.getName());
+      assertEquals("de.mss.xml2class.test", this.classUnderTest.getPackageName());
+      assertEquals("", this.classUnderTest.getExtendsFrom());
+      assertEquals("", this.classUnderTest.getImplementsFrom());
+      assertEquals("private static final long serialVersionUID = 123l;", this.classUnderTest.getVersion());
+      assertNotNull(this.classUnderTest.getConstants());
+      assertNotNull(this.classUnderTest.getVariables());
+      assertNotNull(this.classUnderTest.getSpecialMethods());
+      assertFalse(this.classUnderTest.hasRequiredFields());
+      assertFalse(this.classUnderTest.hasBaseClass());
+      assertFalse(this.classUnderTest.hasInterface());
    }
 }
